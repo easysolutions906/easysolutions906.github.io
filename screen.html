@@ -152,6 +152,23 @@
     .status-bar .usage { color: var(--text-muted); }
     .status-bar .upgrade { color: var(--accent); font-weight: 600; }
 
+    /* Sticky API CTA */
+    .api-cta {
+      position: fixed;
+      top: 1rem;
+      right: 1.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 100;
+      transition: background 0.2s;
+    }
+    .api-cta:hover { background: var(--accent-hover); text-decoration: none; }
+
     /* Results */
     .results-header {
       display: flex;
@@ -379,6 +396,7 @@
   </style>
 </head>
 <body>
+  <a class="api-cta" href="https://github.com/easysolutions906/ofac-screening">Get API Access</a>
   <nav>
     <a href="/" class="logo">EasySolutions</a>
     <div class="links">
