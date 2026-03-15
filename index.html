@@ -561,6 +561,94 @@
       transform: none;
     }
 
+    /* ---- BLOG ---- */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+      gap: 24px;
+    }
+
+    .blog-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .blog-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .blog-card h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .blog-card .blog-desc {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    .blog-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .blog-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      background: var(--accent-subtle);
+      color: var(--accent);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .blog-date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .blog-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .blog-links a {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .blog-links a:hover {
+      color: var(--accent);
+    }
+
+    .blog-links a.pending {
+      opacity: 0.4;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .blog-cta {
+      text-align: center;
+      margin-top: 48px;
+    }
+
     /* ---- FOOTER ---- */
     footer {
       border-top: 1px solid var(--border-color);
@@ -649,6 +737,7 @@
         <li><a href="#products">Products</a></li>
         <li><a href="#quickstart">Quick Start</a></li>
         <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#blog">Blog</a></li>
         <li><a href="https://github.com/easysolutions906">GitHub</a></li>
       </ul>
     </div>
@@ -895,6 +984,171 @@
       </div>
     </div>
 
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog">
+    <div class="section-label">Blog</div>
+    <h2 class="section-title">Tutorials and guides</h2>
+    <p class="section-subtitle">Practical walkthroughs for integrating compliance, healthcare, and finance APIs into your projects.</p>
+
+    <div class="blog-grid">
+
+      <div class="blog-card">
+        <div class="blog-date">March 2026</div>
+        <h3>How to Convert Currencies in Real-Time with a Free API</h3>
+        <p class="blog-desc">Step-by-step guide to adding real-time currency conversion to your Node.js application using the Currency Exchange Pro API.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">currency</span>
+          <span class="blog-tag">api</span>
+          <span class="blog-tag">nodejs</span>
+        </div>
+        <div class="blog-links">
+          <a href="https://dev.to/easysolutions906/how-to-convert-currencies-in-real-time-with-a-free-api-4027">Read on dev.to</a>
+          <a href="https://easysolutions906.hashnode.dev/how-to-convert-currencies-in-real-time-with-a-free-api">Read on Hashnode</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-date">March 2026</div>
+        <h3>How to Look Up ICD-10 Codes Programmatically with Node.js</h3>
+        <p class="blog-desc">Build ICD-10 diagnosis code lookups into your healthcare application with a simple REST API and Node.js.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">healthcare</span>
+          <span class="blog-tag">icd-10</span>
+          <span class="blog-tag">nodejs</span>
+        </div>
+        <div class="blog-links">
+          <a href="https://dev.to/easysolutions906/how-to-look-up-icd-10-codes-programmatically-with-nodejs-ek7">Read on dev.to</a>
+          <a href="https://easysolutions906.hashnode.dev/how-to-look-up-icd-10-codes-programmatically-with-nodejs">Read on Hashnode</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-date">March 2026</div>
+        <h3>How to Search the NPI Registry Programmatically</h3>
+        <p class="blog-desc">Query the NPI registry to verify healthcare providers by name, NPI number, or taxonomy using a REST API.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">healthcare</span>
+          <span class="blog-tag">npi</span>
+          <span class="blog-tag">api</span>
+        </div>
+        <div class="blog-links">
+          <a href="https://dev.to/easysolutions906/how-to-search-the-npi-registry-programmatically-3e6b">Read on dev.to</a>
+          <a href="https://easysolutions906.hashnode.dev/how-to-search-the-npi-registry-programmatically">Read on Hashnode</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-date">March 2026</div>
+        <h3>How to Screen Names Against the OFAC SDN List Programmatically</h3>
+        <p class="blog-desc">Add OFAC sanctions screening to your compliance workflow with fuzzy matching and batch processing.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">ofac</span>
+          <span class="blog-tag">compliance</span>
+          <span class="blog-tag">fintech</span>
+        </div>
+        <div class="blog-links">
+          <a href="https://dev.to/easysolutions906/how-to-screen-names-against-the-ofac-sdn-list-programmatically-13og">Read on dev.to</a>
+          <a href="https://easysolutions906.hashnode.dev/how-to-screen-names-against-the-ofac-sdn-list-programmatically">Read on Hashnode</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-date">March 2026</div>
+        <h3>OFAC Sanctions Screening for Fintechs: A $30/Month Alternative to Enterprise Tools</h3>
+        <p class="blog-desc">How fintechs and startups can meet OFAC compliance requirements without paying enterprise prices.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">ofac</span>
+          <span class="blog-tag">fintech</span>
+          <span class="blog-tag">compliance</span>
+        </div>
+        <div class="blog-links">
+          <a href="https://dev.to/easysolutions906/ofac-sanctions-screening-for-fintechs-a-30month-alternative-to-enterprise-tools-7ka">Read on dev.to</a>
+          <a href="https://easysolutions906.hashnode.dev/ofac-sanctions-screening-for-fintechs-a-30month-alternative-to-enterprise-tools">Read on Hashnode</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-date">March 2026</div>
+        <h3>Adding ICD-10 Code Search to Your Healthcare Application</h3>
+        <p class="blog-desc">Integrate 74,000+ ICD-10 diagnosis codes into your healthcare app with keyword search and code lookup.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">healthcare</span>
+          <span class="blog-tag">icd-10</span>
+          <span class="blog-tag">tutorial</span>
+        </div>
+        <div class="blog-links">
+          <a href="https://dev.to/easysolutions906/adding-icd-10-code-search-to-your-healthcare-application-11ma">Read on dev.to</a>
+          <a href="https://easysolutions906.hashnode.dev/adding-icd-10-code-search-to-your-healthcare-application">Read on Hashnode</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-date">March 2026</div>
+        <h3>How to Verify Healthcare Provider NPI Numbers in Your Application</h3>
+        <p class="blog-desc">Validate and look up healthcare provider NPI numbers programmatically for credentialing and claims workflows.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">healthcare</span>
+          <span class="blog-tag">npi</span>
+          <span class="blog-tag">verification</span>
+        </div>
+        <div class="blog-links">
+          <a href="#" class="pending">Read on dev.to (coming soon)</a>
+          <a href="https://easysolutions906.hashnode.dev/how-to-verify-healthcare-provider-npi-numbers-in-your-application">Read on Hashnode</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-date">March 2026</div>
+        <h3>Using AI Agents for Sanctions Compliance: An OFAC Screening MCP Server</h3>
+        <p class="blog-desc">Build an AI-powered compliance workflow by connecting Claude and Cursor to a live OFAC screening MCP server.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">mcp</span>
+          <span class="blog-tag">ofac</span>
+          <span class="blog-tag">ai-agents</span>
+        </div>
+        <div class="blog-links">
+          <a href="#" class="pending">Read on dev.to (coming soon)</a>
+          <a href="https://easysolutions906.hashnode.dev/using-ai-agents-for-sanctions-compliance-an-ofac-screening-mcp-server">Read on Hashnode</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-date">March 2026</div>
+        <h3>A Healthcare Data MCP Server: ICD-10, NPI, NDC, and DEA Tools for AI Agents</h3>
+        <p class="blog-desc">Give your AI agent access to healthcare compliance data with a single MCP server covering four datasets.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">mcp</span>
+          <span class="blog-tag">healthcare</span>
+          <span class="blog-tag">ai-agents</span>
+        </div>
+        <div class="blog-links">
+          <a href="#" class="pending">Read on dev.to (coming soon)</a>
+          <a href="https://easysolutions906.hashnode.dev/a-healthcare-data-mcp-server-icd-10-npi-ndc-and-dea-tools-for-ai-agents">Read on Hashnode</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-date">March 2026</div>
+        <h3>The Best Free Currency Exchange API in 2026</h3>
+        <p class="blog-desc">Comparing free currency exchange APIs and how to get real-time rates with a generous free tier.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">currency</span>
+          <span class="blog-tag">api</span>
+          <span class="blog-tag">comparison</span>
+        </div>
+        <div class="blog-links">
+          <a href="#" class="pending">Read on dev.to (coming soon)</a>
+          <a href="https://easysolutions906.hashnode.dev/the-best-free-currency-exchange-api-in-2026">Read on Hashnode</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="blog-cta">
+      <a href="https://easysolutions906.hashnode.dev" class="btn btn-primary">Read More on Hashnode</a>
+    </div>
   </section>
 
   <!-- FOOTER -->
