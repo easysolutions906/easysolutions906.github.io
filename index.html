@@ -402,6 +402,165 @@
       font-weight: 600;
     }
 
+    /* ---- STATUS BADGES ---- */
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 100px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    .badge-live {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--green);
+    }
+
+    .badge-soon {
+      background: rgba(234, 179, 8, 0.15);
+      color: #eab308;
+    }
+
+    /* ---- OFAC PRICING CARDS ---- */
+    .ofac-pricing {
+      margin-top: 48px;
+    }
+
+    .ofac-pricing-note {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      padding: 12px 20px;
+      background: rgba(34, 197, 94, 0.06);
+      border: 1px solid rgba(34, 197, 94, 0.15);
+      border-radius: 8px;
+      display: inline-block;
+    }
+
+    .ofac-pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .price-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .price-card.popular {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .price-card-badge {
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      padding: 3px 14px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .price-card h4 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .price-card .price {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .price-card .price span {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .price-card ul {
+      list-style: none;
+      margin: 16px 0 24px;
+      flex-grow: 1;
+    }
+
+    .price-card ul li {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .price-card ul li::before {
+      content: '\2713';
+      color: var(--green);
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+
+    .btn-checkout {
+      display: block;
+      width: 100%;
+      padding: 10px 0;
+      text-align: center;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-checkout:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-checkout:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-checkout-soon {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+    }
+
+    .btn-checkout-soon:hover {
+      background: var(--bg-primary);
+      transform: none;
+    }
+
     /* ---- FOOTER ---- */
     footer {
       border-top: 1px solid var(--border-color);
@@ -646,28 +805,28 @@
         </thead>
         <tbody>
           <tr>
-            <td>OFAC Sanctions Screening</td>
+            <td>OFAC Sanctions Screening <span class="badge badge-live">Live</span></td>
             <td class="tier-free">10 calls/day</td>
             <td>$4.99/mo &mdash; 2,000 calls</td>
             <td>$29.99/mo &mdash; 25,000 calls</td>
             <td>$299.99/mo &mdash; unlimited</td>
           </tr>
           <tr>
-            <td>Healthcare Data Tools</td>
+            <td>Healthcare Data Tools <span class="badge badge-soon">Coming Soon</span></td>
             <td class="tier-free">20 calls/day</td>
             <td>$9.99/mo &mdash; 5,000 calls</td>
             <td>$49.99/mo &mdash; 50,000 calls</td>
             <td>$99.99/mo &mdash; unlimited</td>
           </tr>
           <tr>
-            <td>Currency &amp; Finance</td>
+            <td>Currency &amp; Finance <span class="badge badge-soon">Coming Soon</span></td>
             <td class="tier-free">30 calls/day</td>
             <td>$4.99/mo &mdash; 5,000 calls</td>
             <td>$14.99/mo &mdash; 25,000 calls</td>
             <td>Contact us</td>
           </tr>
           <tr>
-            <td>Web Tools</td>
+            <td>Web Tools <span class="badge badge-soon">Coming Soon</span></td>
             <td class="tier-free">20 calls/day</td>
             <td>$9.99/mo &mdash; 5,000 calls</td>
             <td>$29.99/mo &mdash; 25,000 calls</td>
@@ -676,6 +835,66 @@
         </tbody>
       </table>
     </div>
+
+    <!-- OFAC DETAILED PRICING -->
+    <div class="ofac-pricing">
+      <h3 class="section-title">OFAC Sanctions Screening Plans</h3>
+      <div class="ofac-pricing-note">Free tier: 10 screens/day, no credit card required</div>
+
+      <div class="ofac-pricing-grid">
+
+        <div class="price-card">
+          <h4>Starter</h4>
+          <div class="price">$4.99 <span>/mo</span></div>
+          <ul>
+            <li>100 screens/day</li>
+            <li>25 batch size</li>
+            <li>Fuzzy matching</li>
+            <li>Email support</li>
+          </ul>
+          <button class="btn-checkout" onclick="checkout('starter')">Subscribe</button>
+        </div>
+
+        <div class="price-card popular">
+          <div class="price-card-badge">Most Popular</div>
+          <h4>Pro</h4>
+          <div class="price">$29.99 <span>/mo</span></div>
+          <ul>
+            <li>1,000 screens/day</li>
+            <li>50 batch size</li>
+            <li>Fuzzy matching</li>
+            <li>Priority support</li>
+          </ul>
+          <button class="btn-checkout" onclick="checkout('pro')">Subscribe</button>
+        </div>
+
+        <div class="price-card">
+          <h4>Business</h4>
+          <div class="price">$99.99 <span>/mo</span></div>
+          <ul>
+            <li>5,000 screens/day</li>
+            <li>100 batch size</li>
+            <li>Fuzzy matching</li>
+            <li>Priority support</li>
+          </ul>
+          <button class="btn-checkout" onclick="checkout('business')">Subscribe</button>
+        </div>
+
+        <div class="price-card">
+          <h4>Enterprise</h4>
+          <div class="price">$299.99 <span>/mo</span></div>
+          <ul>
+            <li>50,000 screens/day</li>
+            <li>100 batch size</li>
+            <li>Fuzzy matching</li>
+            <li>Dedicated support</li>
+          </ul>
+          <button class="btn-checkout" onclick="checkout('enterprise')">Subscribe</button>
+        </div>
+
+      </div>
+    </div>
+
   </section>
 
   <!-- FOOTER -->
@@ -689,6 +908,30 @@
       </ul>
     </div>
   </footer>
+
+  <script>
+    const CHECKOUT_URLS = {
+      ofac: 'https://ofac-screening-production.up.railway.app/checkout',
+      healthcare: '#',
+      finance: '#',
+      webtools: '#',
+    };
+
+    const checkout = (plan, server = 'ofac') => {
+      const url = CHECKOUT_URLS[server];
+      if (!url || url === '#') {
+        return;
+      }
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan }),
+      })
+        .then((r) => r.json())
+        .then((d) => { window.location.href = d.url; })
+        .catch(() => { alert('Checkout is temporarily unavailable. Please try again.'); });
+    };
+  </script>
 
 </body>
 </html>
