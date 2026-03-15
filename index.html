@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Easy Solutions - AI-Ready Data Tools | MCP Servers for Claude, Cursor &amp; AI Agents</title>
+  <meta name="description" content="Production-grade MCP servers for Claude, Cursor, and any AI agent. Healthcare compliance, sanctions screening, currency exchange, and more.">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --border-color: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-subtle: rgba(59, 130, 246, 0.1);
+      --green: #22c55e;
+      --radius: 12px;
+      --max-width: 1200px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+    }
+
+    /* ---- NAV ---- */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* ---- HERO ---- */
+    .hero {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 100px;
+      background: var(--accent-subtle);
+      color: var(--accent);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.025em;
+      margin-bottom: 24px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 3.75rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 680px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: #263347;
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+
+    /* ---- SECTION COMMON ---- */
+    section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.015em;
+    }
+
+    .section-subtitle {
+      font-size: 1.0625rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 48px;
+    }
+
+    /* ---- PRODUCT CARDS ---- */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      gap: 16px;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .card-price {
+      white-space: nowrap;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--green);
+      background: rgba(34, 197, 94, 0.1);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      margin-bottom: 20px;
+      line-height: 1.65;
+    }
+
+    .card-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .card-links a {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-links a:hover {
+      color: var(--accent);
+    }
+
+    .card-install {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      overflow-x: auto;
+    }
+
+    .card-install span {
+      color: var(--green);
+    }
+
+    /* ---- QUICK START ---- */
+    .quickstart-block {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .quickstart-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .quickstart-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .quickstart-dot.red { background: #ef4444; }
+    .quickstart-dot.yellow { background: #eab308; }
+    .quickstart-dot.green { background: #22c55e; }
+
+    .quickstart-label {
+      margin-left: 8px;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .quickstart-code {
+      padding: 24px;
+      overflow-x: auto;
+    }
+
+    .quickstart-code pre {
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 0.8125rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .quickstart-code .key { color: #7dd3fc; }
+    .quickstart-code .str { color: #86efac; }
+    .quickstart-code .bracket { color: var(--text-muted); }
+    .quickstart-code .comment { color: var(--text-muted); font-style: italic; }
+
+    .quickstart-note {
+      margin-top: 24px;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .quickstart-note code {
+      background: var(--bg-secondary);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8125rem;
+      border: 1px solid var(--border-color);
+    }
+
+    /* ---- PRICING TABLE ---- */
+    .pricing-wrapper {
+      overflow-x: auto;
+    }
+
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+      min-width: 700px;
+    }
+
+    .pricing-table thead {
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .pricing-table th {
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pricing-table td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+
+    .pricing-table tbody tr:hover {
+      background: rgba(59, 130, 246, 0.04);
+    }
+
+    .pricing-table td:first-child {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .tier-free {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      border-top: 1px solid var(--border-color);
+      margin-top: 40px;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 48px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-left {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 60px 24px 48px;
+      }
+
+      section {
+        padding: 48px 24px;
+      }
+
+      .nav-links {
+        gap: 20px;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links {
+        gap: 16px;
+        font-size: 0.8125rem;
+      }
+
+      .card {
+        padding: 24px;
+      }
+
+      .card-header {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-brand">Easy Solutions</div>
+      <ul class="nav-links">
+        <li><a href="#products">Products</a></li>
+        <li><a href="#quickstart">Quick Start</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="https://github.com/easysolutions906">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-badge">MCP Servers for AI Agents</div>
+    <h1>AI-Ready <span class="gradient">Data Tools</span></h1>
+    <p>Production-grade MCP servers for Claude, Cursor, and any AI agent. Healthcare compliance, sanctions screening, currency exchange, and more.</p>
+    <div class="hero-cta">
+      <a href="#quickstart" class="btn btn-primary">Get Started</a>
+      <a href="https://github.com/easysolutions906" class="btn btn-secondary">View on GitHub</a>
+    </div>
+  </header>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="section-label">Products</div>
+    <h2 class="section-title">Four servers, dozens of tools</h2>
+    <p class="section-subtitle">Each server installs via npx with zero configuration. Free tiers included on every plan.</p>
+
+    <div class="products-grid">
+
+      <!-- OFAC -->
+      <div class="card">
+        <div class="card-header">
+          <h3>OFAC Sanctions Screening</h3>
+          <span class="card-price">Free tier available</span>
+        </div>
+        <p>Screen names against the US Treasury SDN list with fuzzy matching. 18,700+ entities. Jaro-Winkler, phonetic, and token-set algorithms. Essential for KYC/AML compliance.</p>
+        <div class="card-links">
+          <a href="https://www.npmjs.com/package/@easysolutions906/mcp-ofac">npm</a>
+          <a href="https://mcp.so/server/mcp-ofac/easysolutions906">mcp.so</a>
+          <a href="https://github.com/easysolutions906/ofac-screening">GitHub</a>
+        </div>
+        <div class="card-install">
+          <span>$</span> npx -y @easysolutions906/mcp-ofac
+        </div>
+      </div>
+
+      <!-- Healthcare -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Healthcare Data Tools</h3>
+          <span class="card-price">Free tier available</span>
+        </div>
+        <p>ICD-10 diagnosis codes (74,000+), NPI provider registry, NDC drug directory (111,000+), and DEA number validation. 10 tools in one server.</p>
+        <div class="card-links">
+          <a href="https://www.npmjs.com/package/@easysolutions906/mcp-healthcare">npm</a>
+          <a href="https://mcp.so/server/mcp-healthcare/easysolutions906">mcp.so</a>
+          <a href="https://github.com/easysolutions906/mcp-healthcare">GitHub</a>
+        </div>
+        <div class="card-install">
+          <span>$</span> npx -y @easysolutions906/mcp-healthcare
+        </div>
+      </div>
+
+      <!-- Finance -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Currency &amp; Finance</h3>
+          <span class="card-price">Free tier available</span>
+        </div>
+        <p>Real-time and historical exchange rates for 30+ currencies. Convert, compare rates, and look up historical data back to 1999.</p>
+        <div class="card-links">
+          <a href="https://www.npmjs.com/package/@easysolutions906/mcp-finance">npm</a>
+          <a href="https://mcp.so/server/mcp-finance/easysolutions906">mcp.so</a>
+          <a href="https://github.com/easysolutions906/mcp-finance">GitHub</a>
+        </div>
+        <div class="card-install">
+          <span>$</span> npx -y @easysolutions906/mcp-finance
+        </div>
+      </div>
+
+      <!-- Web Tools -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Web Tools</h3>
+          <span class="card-price">Free tier available</span>
+        </div>
+        <p>Email validation, IP geolocation, URL metadata scraping, sentiment analysis, QR code generation, and random test data. 11 tools in one server.</p>
+        <div class="card-links">
+          <a href="https://www.npmjs.com/package/@easysolutions906/mcp-webtools">npm</a>
+          <a href="https://mcp.so/server/mcp-webtools/easysolutions906">mcp.so</a>
+          <a href="https://github.com/easysolutions906/mcp-webtools">GitHub</a>
+        </div>
+        <div class="card-install">
+          <span>$</span> npx -y @easysolutions906/mcp-webtools
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- QUICK START -->
+  <section id="quickstart">
+    <div class="section-label">Quick Start</div>
+    <h2 class="section-title">Add to Claude Desktop in 60 seconds</h2>
+    <p class="section-subtitle">Paste this into your Claude Desktop config file and restart. All four servers will be available immediately.</p>
+
+    <div class="quickstart-block">
+      <div class="quickstart-header">
+        <span class="quickstart-dot red"></span>
+        <span class="quickstart-dot yellow"></span>
+        <span class="quickstart-dot green"></span>
+        <span class="quickstart-label">claude_desktop_config.json</span>
+      </div>
+      <div class="quickstart-code">
+<pre><span class="bracket">{</span>
+  <span class="key">"mcpServers"</span><span class="bracket">: {</span>
+    <span class="key">"ofac"</span><span class="bracket">: {</span>
+      <span class="key">"command"</span>: <span class="str">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@easysolutions906/mcp-ofac"</span>]
+    <span class="bracket">},</span>
+    <span class="key">"healthcare"</span><span class="bracket">: {</span>
+      <span class="key">"command"</span>: <span class="str">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@easysolutions906/mcp-healthcare"</span>]
+    <span class="bracket">},</span>
+    <span class="key">"finance"</span><span class="bracket">: {</span>
+      <span class="key">"command"</span>: <span class="str">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@easysolutions906/mcp-finance"</span>]
+    <span class="bracket">},</span>
+    <span class="key">"webtools"</span><span class="bracket">: {</span>
+      <span class="key">"command"</span>: <span class="str">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@easysolutions906/mcp-webtools"</span>]
+    <span class="bracket">}</span>
+  <span class="bracket">}</span>
+<span class="bracket">}</span></pre>
+      </div>
+    </div>
+
+    <p class="quickstart-note">
+      Config file location: <code>~/Library/Application Support/Claude/claude_desktop_config.json</code> on macOS, <code>%APPDATA%\Claude\claude_desktop_config.json</code> on Windows. Works with any MCP-compatible client including Cursor, Windsurf, and custom agents.
+    </p>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Simple, transparent pricing</h2>
+    <p class="section-subtitle">Every server includes a free tier. Upgrade when you need more capacity.</p>
+
+    <div class="pricing-wrapper">
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>Server</th>
+            <th>Free</th>
+            <th>Starter</th>
+            <th>Pro</th>
+            <th>Enterprise</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>OFAC Sanctions Screening</td>
+            <td class="tier-free">10 calls/day</td>
+            <td>$4.99/mo &mdash; 2,000 calls</td>
+            <td>$29.99/mo &mdash; 25,000 calls</td>
+            <td>$299.99/mo &mdash; unlimited</td>
+          </tr>
+          <tr>
+            <td>Healthcare Data Tools</td>
+            <td class="tier-free">20 calls/day</td>
+            <td>$9.99/mo &mdash; 5,000 calls</td>
+            <td>$49.99/mo &mdash; 50,000 calls</td>
+            <td>$99.99/mo &mdash; unlimited</td>
+          </tr>
+          <tr>
+            <td>Currency &amp; Finance</td>
+            <td class="tier-free">30 calls/day</td>
+            <td>$4.99/mo &mdash; 5,000 calls</td>
+            <td>$14.99/mo &mdash; 25,000 calls</td>
+            <td>Contact us</td>
+          </tr>
+          <tr>
+            <td>Web Tools</td>
+            <td class="tier-free">20 calls/day</td>
+            <td>$9.99/mo &mdash; 5,000 calls</td>
+            <td>$29.99/mo &mdash; 25,000 calls</td>
+            <td>$49.99/mo &mdash; unlimited</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-left">Easy Solutions &mdash; AI-ready data tools</div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/easysolutions906">GitHub</a></li>
+        <li><a href="https://www.npmjs.com/~easysolutions906">npm</a></li>
+        <li><a href="https://mcp.so">mcp.so</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
