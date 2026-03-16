@@ -588,6 +588,12 @@
     }
     footer a { color: var(--text-dim); }
 
+    /* Ad slots */
+    .ad-slot { margin: 1.5rem 0; padding: 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); text-align: center; min-height: 90px; }
+    .ad-slot.hidden { display: none; }
+    .ad-slot .ad-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+    @media print { .ad-slot { display: none !important; } }
+
     /* Responsive */
     @media (max-width: 600px) {
       h1 { font-size: 1.5rem; }
@@ -658,6 +664,11 @@ PV1|1|I|ICU^101^A|||||||ATT^ATTENDING^DOC|||||||||||||||||||||||||||202603161200
       </div>
     </div>
 
+    <div class="ad-slot" id="ad-top">
+      <div class="ad-label">Advertisement</div>
+      <div id="ad-top-content"></div>
+    </div>
+
     <div class="generate-section">
       <h2>Generate Test Messages</h2>
       <p class="gen-subtitle">Generate realistic sample HL7 messages for testing your integrations.</p>
@@ -685,6 +696,11 @@ PV1|1|I|ICU^101^A|||||||ATT^ATTENDING^DOC|||||||||||||||||||||||||||202603161200
           <button class="copy-btn" id="gen-parse-btn">Parse This Message</button>
         </div>
       </div>
+    </div>
+
+    <div class="ad-slot" id="ad-bottom">
+      <div class="ad-label">Advertisement</div>
+      <div id="ad-bottom-content"></div>
     </div>
 
     <div class="pricing-section" id="pricing">
@@ -1184,9 +1200,18 @@ PV1|1|I|ICU^101^A|||||||ATT^ATTENDING^DOC|||||||||||||||||||||||||||202603161200
       }
     });
 
+    // --- Ads (hidden for Pro users) ---
+    const updateAds = () => {
+      const hide = hasApiKey();
+      document.querySelectorAll('.ad-slot').forEach((el) => {
+        el.classList.toggle('hidden', hide);
+      });
+    };
+
     // --- Init ---
     initApiKey();
     updateUsageDisplay();
+    updateAds();
   </script>
 </body>
 </html>
