@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free NAICS Code Lookup — Industry Classification Search Tool</title>
+  <meta name="description" content="Look up NAICS 2022 and SIC industry codes for free. Search by keyword or code number. 2,133 NAICS codes and 1,498 SIC codes. No signup required.">
+  <meta name="keywords" content="NAICS code lookup, SIC code search, industry classification, NAICS 2022">
+  <link rel="canonical" href="https://easysolutions906.github.io/naics.html">
+  <meta property="og:title" content="Free NAICS Code Lookup — Industry Classification Search Tool">
+  <meta property="og:description" content="Look up NAICS 2022 and SIC industry codes for free. Search by keyword or code number. 2,133 NAICS codes and 1,498 SIC codes. No signup required.">
+  <meta property="og:url" content="https://easysolutions906.github.io/naics.html">
+  <meta property="og:type" content="website">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --border: #334155;
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --red: #ef4444;
+      --orange: #f97316;
+      --yellow: #eab308;
+      --green: #22c55e;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+    }
+    nav .logo { font-weight: 700; font-size: 1.1rem; color: var(--text); }
+    nav .links { display: flex; gap: 1.5rem; }
+    nav .links a { color: var(--text-dim); font-size: 0.9rem; }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 3rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+
+    .api-cta {
+      position: fixed;
+      top: 1rem;
+      right: 1.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 100;
+      transition: background 0.2s;
+    }
+    .api-cta:hover { background: var(--accent-hover); text-decoration: none; }
+
+    /* Trust bar */
+    .trust-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .trust-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--green);
+      flex-shrink: 0;
+    }
+
+    /* Toggle */
+    .toggle-group {
+      display: flex;
+      gap: 0;
+      margin-bottom: 1rem;
+    }
+
+    .toggle-group label {
+      padding: 0.6rem 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .toggle-group label:first-child {
+      border-radius: var(--radius) 0 0 var(--radius);
+      border-right: none;
+    }
+
+    .toggle-group label:last-child {
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .toggle-group input[type="radio"] { display: none; }
+
+    .toggle-group input[type="radio"]:checked + label {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    /* Search form */
+    .search-form {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .search-form input[type="text"] {
+      flex: 1;
+      min-width: 250px;
+      padding: 0.85rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-form input:focus {
+      border-color: var(--accent);
+    }
+
+    .search-form button {
+      padding: 0.85rem 1.75rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .search-form button:hover { background: var(--accent-hover); }
+    .search-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Status bar */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .status-bar .usage { color: var(--text-muted); }
+    .status-bar .upgrade { color: var(--accent); font-weight: 600; }
+
+    /* Error */
+    .error-msg {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: var(--radius);
+      padding: 1rem;
+      color: var(--red);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .error-msg.visible { display: block; }
+
+    /* Ad slot */
+    .ad-slot {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      min-height: 90px;
+    }
+
+    /* Results */
+    .results-container {
+      display: none;
+    }
+
+    .results-container.visible { display: block; }
+
+    .results-count {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .result-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.75rem;
+      transition: border-color 0.2s;
+    }
+
+    .result-card:hover { border-color: var(--accent); }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .result-code {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    }
+
+    .result-type-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.7rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-naics { background: rgba(59, 130, 246, 0.15); color: var(--accent); }
+    .badge-sic { background: rgba(249, 115, 22, 0.15); color: var(--orange); }
+
+    .result-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-hierarchy {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .hierarchy-level {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.15rem 0;
+    }
+
+    .hierarchy-arrow {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+    }
+
+    .hierarchy-code {
+      color: var(--text-dim);
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+
+    /* Details section for single lookup */
+    .details-section {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 0;
+      font-size: 0.85rem;
+    }
+
+    .detail-row .label { color: var(--text-muted); }
+    .detail-row .value { color: var(--text-dim); font-weight: 500; }
+
+    /* Pricing section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .price-card:hover { border-color: var(--accent); }
+
+    .price-card.popular {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .price-card-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 12px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .price-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-card .price {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+
+    .price-card .price span {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .price-card ul {
+      list-style: none;
+      margin-bottom: 1rem;
+    }
+
+    .price-card ul li {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      padding: 0.2rem 0;
+    }
+
+    .price-card ul li::before {
+      content: '\2713';
+      color: var(--green);
+      font-weight: 700;
+      margin-right: 0.5rem;
+    }
+
+    /* Email capture */
+    .email-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .email-section h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .email-section p {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .email-form {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .email-form input {
+      flex: 1;
+      padding: 0.7rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .email-form input:focus { border-color: var(--accent); }
+
+    .email-form button {
+      padding: 0.7rem 1.25rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .email-form button:hover { background: var(--accent-hover); }
+
+    /* FAQ */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-item h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-item p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+
+    /* Footer */
+    footer {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    footer .footer-links { display: flex; gap: 1.5rem; }
+    footer .footer-links a { color: var(--text-muted); }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .search-form { flex-direction: column; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .email-form { flex-direction: column; }
+      .result-header { flex-direction: column; align-items: flex-start; }
+      .trust-bar { gap: 1rem; }
+    }
+  </style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9183223861776607" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <a href="https://rapidapi.com/easysolutions906/api/naics-sic-code-lookup" class="api-cta" target="_blank">Get API Key</a>
+
+  <nav>
+    <a href="index.html" class="logo">Easy Solutions</a>
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="screen.html">OFAC Screener</a>
+      <a href="currency.html">Currency</a>
+      <a href="https://github.com/easysolutions906">GitHub</a>
+    </div>
+  </nav>
+
+  <main>
+    <h1>NAICS / SIC Code Lookup</h1>
+    <p class="subtitle">Search NAICS 2022 and SIC industry classification codes by keyword or code number. Used for business filings, loan applications, insurance, and tax reporting.</p>
+
+    <div class="trust-bar">
+      <div class="trust-item">
+        <div class="trust-icon">&#10003;</div>
+        <span>2,133 NAICS codes</span>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#10003;</div>
+        <span>1,498 SIC codes</span>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#10003;</div>
+        <span>NAICS 2022</span>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#10003;</div>
+        <span>No signup required</span>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <span>Free tier: unlimited lookups on this page</span>
+      <a href="https://rapidapi.com/easysolutions906/api/naics-sic-code-lookup" class="upgrade" target="_blank">Get API Access</a>
+    </div>
+
+    <div id="error" class="error-msg"></div>
+
+    <div class="toggle-group">
+      <input type="radio" name="codeType" id="toggleNaics" value="naics" checked>
+      <label for="toggleNaics">NAICS</label>
+      <input type="radio" name="codeType" id="toggleSic" value="sic">
+      <label for="toggleSic">SIC</label>
+    </div>
+
+    <div class="search-form">
+      <input type="text" id="searchInput" placeholder="Search by keyword or code (e.g. software, 541511)" autocomplete="off">
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <!-- Ad slot -->
+    <div class="ad-slot">
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-9183223861776607"
+        data-ad-slot="auto"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <div id="results" class="results-container">
+      <div id="resultsCount" class="results-count"></div>
+      <div id="resultsList"></div>
+    </div>
+
+    <!-- Ad slot after results -->
+    <div class="ad-slot" id="adSlotBottom" style="display:none;">
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-9183223861776607"
+        data-ad-slot="auto"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- Pricing -->
+    <h2>API Pricing</h2>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h4>Free</h4>
+        <div class="price">$0 <span>/mo</span></div>
+        <ul>
+          <li>Unlimited on this page</li>
+          <li>NAICS + SIC search</li>
+          <li>Keyword + code lookup</li>
+          <li>Sector hierarchy</li>
+        </ul>
+      </div>
+      <div class="price-card popular">
+        <div class="price-card-badge">Recommended</div>
+        <h4>Pro</h4>
+        <div class="price">$4.99 <span>/mo</span></div>
+        <ul>
+          <li>50 req/min</li>
+          <li>5,000 requests/mo</li>
+          <li>Full API access</li>
+          <li>JSON responses</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h4>Ultra</h4>
+        <div class="price">$14.99 <span>/mo</span></div>
+        <ul>
+          <li>200 req/min</li>
+          <li>25,000 requests/mo</li>
+          <li>Full API access</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>What is a NAICS code?</h3>
+      <p>NAICS (North American Industry Classification System) is the standard used by the U.S. Census Bureau and federal agencies to classify businesses by industry. The current version is NAICS 2022, containing 2,133 industry codes organized into 20 sectors.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What is a SIC code?</h3>
+      <p>SIC (Standard Industrial Classification) codes are an older system used by the SEC, OSHA, and many insurance and banking systems. While NAICS has officially replaced SIC for Census purposes, SIC codes are still widely required for SEC filings, workers compensation, and commercial insurance.</p>
+    </div>
+    <div class="faq-item">
+      <h3>When do I need a NAICS code?</h3>
+      <p>You need a NAICS code for SBA loan applications, government contracting (SAM.gov registration), Census Bureau surveys, business tax filings, and many state business license applications. Banks and lenders also use NAICS codes for underwriting.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How is the sector hierarchy structured?</h3>
+      <p>NAICS codes use a 6-digit hierarchical structure: 2 digits for sector, 3 for subsector, 4 for industry group, 5 for NAICS industry, and 6 for the national industry. For example, 541511 breaks down as: 54 (Professional Services) &rarr; 541 (Professional, Scientific, Technical) &rarr; 5415 (Computer Systems Design) &rarr; 54151 (Computer Systems Design Services) &rarr; 541511 (Custom Computer Programming).</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does this tool have an API?</h3>
+      <p>Yes. The REST API supports keyword search, direct code lookup, and returns full hierarchy data as JSON. Subscribe on RapidAPI to get your API key.</p>
+    </div>
+
+    <!-- Email capture -->
+    <div class="email-section">
+      <h3>Get your API key</h3>
+      <p>Integrate NAICS and SIC lookups directly into your application. Subscribe on RapidAPI for instant access.</p>
+      <div class="email-form">
+        <input type="email" id="notifyEmail" placeholder="you@company.com">
+        <button id="notifyBtn">Notify Me</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>Easy Solutions &mdash; AI-ready data tools</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="https://github.com/easysolutions906">GitHub</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </footer>
+
+  <script>
+    const API = window.location.hostname === 'localhost'
+      ? 'http://localhost:3012'
+      : 'https://naics-production.up.railway.app';
+
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const resultsContainer = document.getElementById('results');
+    const resultsCount = document.getElementById('resultsCount');
+    const resultsList = document.getElementById('resultsList');
+    const errorMsg = document.getElementById('error');
+    const adSlotBottom = document.getElementById('adSlotBottom');
+
+    const getCodeType = () =>
+      document.querySelector('input[name="codeType"]:checked').value;
+
+    const showError = (msg) => {
+      errorMsg.textContent = msg;
+      errorMsg.classList.add('visible');
+      setTimeout(() => errorMsg.classList.remove('visible'), 5000);
+    };
+
+    const isNumeric = (str) => /^\d+$/.test(str.trim());
+
+    const renderHierarchy = (item) => {
+      const parts = [];
+
+      if (item.sector) {
+        parts.push({ code: item.sectorCode || '', title: item.sector });
+      }
+      if (item.subsector) {
+        parts.push({ code: item.subsectorCode || '', title: item.subsector });
+      }
+      if (item.industryGroup) {
+        parts.push({ code: item.industryGroupCode || '', title: item.industryGroup });
+      }
+      if (item.naicsIndustry) {
+        parts.push({ code: item.naicsIndustryCode || '', title: item.naicsIndustry });
+      }
+
+      if (parts.length === 0) {
+        return '';
+      }
+
+      return `
+        <div class="result-hierarchy">
+          ${parts.map((p, i) =>
+            `<div class="hierarchy-level">
+              ${i > 0 ? '<span class="hierarchy-arrow">&rarr;</span>' : ''}
+              ${p.code ? `<span class="hierarchy-code">${p.code}</span>` : ''}
+              <span>${p.title}</span>
+            </div>`
+          ).join('')}
+        </div>
+      `;
+    };
+
+    const renderCard = (item, type) => {
+      const code = item.code || '';
+      const title = item.title || item.description || '';
+      const badgeClass = type === 'naics' ? 'badge-naics' : 'badge-sic';
+      const badgeLabel = type === 'naics' ? 'NAICS' : 'SIC';
+
+      return `
+        <div class="result-card">
+          <div class="result-header">
+            <div>
+              <span class="result-code">${code}</span>
+              <span class="result-type-badge ${badgeClass}">${badgeLabel}</span>
+            </div>
+          </div>
+          <div class="result-title">${title}</div>
+          ${renderHierarchy(item)}
+        </div>
+      `;
+    };
+
+    const doSearch = async () => {
+      const query = searchInput.value.trim();
+
+      if (!query) {
+        showError('Please enter a keyword or code number to search.');
+        return;
+      }
+
+      searchBtn.disabled = true;
+      searchBtn.textContent = 'Searching...';
+      resultsContainer.classList.remove('visible');
+
+      const type = getCodeType();
+      const numeric = isNumeric(query);
+
+      let url;
+      if (type === 'sic') {
+        url = numeric
+          ? `${API}/sic/lookup?code=${encodeURIComponent(query)}`
+          : `${API}/sic/search?q=${encodeURIComponent(query)}`;
+      } else {
+        url = numeric
+          ? `${API}/lookup?code=${encodeURIComponent(query)}`
+          : `${API}/search?q=${encodeURIComponent(query)}`;
+      }
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!res.ok) {
+          showError(data.error || 'Search failed. Please try again.');
+          return;
+        }
+
+        const items = Array.isArray(data) ? data : (data.results || [data]);
+
+        if (items.length === 0 || (items.length === 1 && !items[0].code)) {
+          showError(`No ${type.toUpperCase()} codes found for "${query}". Try a different keyword.`);
+          return;
+        }
+
+        resultsCount.textContent = `${items.length} result${items.length === 1 ? '' : 's'} found`;
+        resultsList.innerHTML = items.map((item) => renderCard(item, type)).join('');
+        resultsContainer.classList.add('visible');
+
+        adSlotBottom.style.display = 'block';
+        try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) { /* ad may not load */ }
+      } catch {
+        showError('Could not reach the NAICS/SIC API. Please try again.');
+      } finally {
+        searchBtn.disabled = false;
+        searchBtn.textContent = 'Search';
+      }
+    };
+
+    searchBtn.addEventListener('click', doSearch);
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { doSearch(); }
+    });
+
+    document.getElementById('notifyBtn').addEventListener('click', () => {
+      const email = document.getElementById('notifyEmail').value;
+      if (email && email.includes('@')) {
+        document.getElementById('notifyBtn').textContent = 'Subscribed!';
+        document.getElementById('notifyEmail').value = '';
+      }
+    });
+  </script>
+
+</body>
+</html>
