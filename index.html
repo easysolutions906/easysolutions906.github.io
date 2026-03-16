@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Easy Solutions - AI-Ready Data Tools | MCP Servers for Claude, Cursor &amp; AI Agents</title>
-  <meta name="description" content="Production-grade MCP servers for Claude, Cursor, and any AI agent. Healthcare compliance, sanctions screening, currency exchange, and more.">
+  <meta name="description" content="11 production-grade MCP servers for Claude, Cursor, and AI agents. OFAC screening, healthcare data, HL7, currency exchange, routing numbers, NAICS codes, CUSIP validation, and more.">
   <style>
     *, *::before, *::after {
       margin: 0;
@@ -748,7 +748,7 @@
   <header class="hero">
     <div class="hero-badge">MCP Servers for AI Agents</div>
     <h1>AI-Ready <span class="gradient">Data Tools</span></h1>
-    <p>Production-grade MCP servers for Claude, Cursor, and any AI agent. Healthcare compliance, sanctions screening, currency exchange, and more.</p>
+    <p>Production-grade MCP servers for Claude, Cursor, and any AI agent. Healthcare, compliance, finance, and regulatory data tools &mdash; 11 servers, 60+ tools.</p>
     <div class="hero-cta">
       <a href="#quickstart" class="btn btn-primary">Get Started</a>
       <a href="https://github.com/easysolutions906" class="btn btn-secondary">View on GitHub</a>
@@ -758,7 +758,7 @@
   <!-- PRODUCTS -->
   <section id="products">
     <div class="section-label">Products</div>
-    <h2 class="section-title">Four servers, dozens of tools</h2>
+    <h2 class="section-title">11 servers, 60+ tools</h2>
     <p class="section-subtitle">Each server installs via npx with zero configuration. Free tiers included on every plan.</p>
 
     <div class="products-grid">
@@ -766,7 +766,7 @@
       <!-- OFAC -->
       <div class="card">
         <div class="card-header">
-          <h3>OFAC Sanctions Screening</h3>
+          <h3>OFAC Sanctions Screening <span class="badge badge-live">Live</span></h3>
           <span class="card-price">Free tier available</span>
         </div>
         <p>Screen names against the US Treasury SDN list with fuzzy matching. 18,700+ entities. Jaro-Winkler, phonetic, and token-set algorithms. Essential for KYC/AML compliance.</p>
@@ -774,6 +774,7 @@
           <a href="https://www.npmjs.com/package/@easysolutions906/mcp-ofac">npm</a>
           <a href="https://mcp.so/server/mcp-ofac/easysolutions906">mcp.so</a>
           <a href="https://github.com/easysolutions906/ofac-screening">GitHub</a>
+          <a href="screen.html">Live Demo</a>
         </div>
         <div class="card-install">
           <span>$</span> npx -y @easysolutions906/mcp-ofac
@@ -783,7 +784,7 @@
       <!-- Healthcare -->
       <div class="card">
         <div class="card-header">
-          <h3>Healthcare Data Tools</h3>
+          <h3>Healthcare Data Tools <span class="badge badge-live">Live</span></h3>
           <span class="card-price">Free tier available</span>
         </div>
         <p>ICD-10 diagnosis codes (74,000+), NPI provider registry, NDC drug directory (111,000+), and DEA number validation. 10 tools in one server.</p>
@@ -797,10 +798,28 @@
         </div>
       </div>
 
+      <!-- HL7 Tools -->
+      <div class="card">
+        <div class="card-header">
+          <h3>HL7 Tools <span class="badge badge-live">Live</span></h3>
+          <span class="card-price">Free tier available</span>
+        </div>
+        <p>Parse, validate, and convert HL7v2 messages. Transform HL7 to FHIR JSON. Build segments, generate ACKs, and query message fields. 9 tools for healthcare interoperability.</p>
+        <div class="card-links">
+          <a href="https://www.npmjs.com/package/@easysolutions906/hl7-tools">npm</a>
+          <a href="https://mcp.so/server/hl7-tools/easysolutions906">mcp.so</a>
+          <a href="https://github.com/easysolutions906/hl7-tools">GitHub</a>
+          <a href="hl7.html">Live Demo</a>
+        </div>
+        <div class="card-install">
+          <span>$</span> npx -y @easysolutions906/hl7-tools
+        </div>
+      </div>
+
       <!-- Finance -->
       <div class="card">
         <div class="card-header">
-          <h3>Currency &amp; Finance</h3>
+          <h3>Currency &amp; Finance <span class="badge badge-live">Live</span></h3>
           <span class="card-price">Free tier available</span>
         </div>
         <p>Real-time and historical exchange rates for 30+ currencies. Convert, compare rates, and look up historical data back to 1999.</p>
@@ -817,7 +836,7 @@
       <!-- Web Tools -->
       <div class="card">
         <div class="card-header">
-          <h3>Web Tools</h3>
+          <h3>Web Tools <span class="badge badge-live">Live</span></h3>
           <span class="card-price">Free tier available</span>
         </div>
         <p>Email validation, IP geolocation, URL metadata scraping, sentiment analysis, QR code generation, and random test data. 11 tools in one server.</p>
@@ -831,6 +850,105 @@
         </div>
       </div>
 
+      <!-- Routing Numbers -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Bank Routing Numbers <span class="badge badge-live">Live</span></h3>
+          <span class="card-price">Free tier available</span>
+        </div>
+        <p>Look up any of 28,000+ US bank routing numbers. Validate ABA check digits, search by bank name or state. Essential for ACH, wire transfers, and payroll.</p>
+        <div class="card-links">
+          <a href="https://www.npmjs.com/package/@easysolutions906/routing-api">npm</a>
+          <a href="https://github.com/easysolutions906/routing-number-api">GitHub</a>
+          <a href="routing.html">Live Demo</a>
+        </div>
+        <div class="card-install">
+          <span>$</span> npx -y @easysolutions906/routing-api
+        </div>
+      </div>
+
+      <!-- NAICS -->
+      <div class="card">
+        <div class="card-header">
+          <h3>NAICS/SIC Code Lookup <span class="badge badge-live">Live</span></h3>
+          <span class="card-price">Free tier available</span>
+        </div>
+        <p>Search and look up 2,000+ NAICS industry codes and SIC crosswalks. Required for business loans, insurance, tax filings, and SBA applications.</p>
+        <div class="card-links">
+          <a href="https://www.npmjs.com/package/@easysolutions906/naics-api">npm</a>
+          <a href="https://github.com/easysolutions906/naics-api">GitHub</a>
+          <a href="naics.html">Live Demo</a>
+        </div>
+        <div class="card-install">
+          <span>$</span> npx -y @easysolutions906/naics-api
+        </div>
+      </div>
+
+      <!-- CUSIP -->
+      <div class="card">
+        <div class="card-header">
+          <h3>CUSIP/ISIN Validator <span class="badge badge-live">Live</span></h3>
+          <span class="card-price">Free tier available</span>
+        </div>
+        <p>Validate CUSIP and ISIN security identifiers using check-digit algorithms. No dataset needed — pure algorithmic validation for trading platforms and fintech.</p>
+        <div class="card-links">
+          <a href="https://www.npmjs.com/package/@easysolutions906/cusip-api">npm</a>
+          <a href="https://github.com/easysolutions906/cusip-api">GitHub</a>
+        </div>
+        <div class="card-install">
+          <span>$</span> npx -y @easysolutions906/cusip-api
+        </div>
+      </div>
+
+      <!-- FIPS -->
+      <div class="card">
+        <div class="card-header">
+          <h3>FIPS County Codes <span class="badge badge-live">Live</span></h3>
+          <span class="card-price">Free tier available</span>
+        </div>
+        <p>Look up FIPS county codes by state, county name, or code. Used in mortgage, title, appraisal, and GIS systems. Census Bureau data.</p>
+        <div class="card-links">
+          <a href="https://www.npmjs.com/package/@easysolutions906/fips-api">npm</a>
+          <a href="https://github.com/easysolutions906/fips-api">GitHub</a>
+          <a href="fips.html">Live Demo</a>
+        </div>
+        <div class="card-install">
+          <span>$</span> npx -y @easysolutions906/fips-api
+        </div>
+      </div>
+
+      <!-- NCCI -->
+      <div class="card">
+        <div class="card-header">
+          <h3>NCCI Workers Comp <span class="badge badge-live">Live</span></h3>
+          <span class="card-price">Free tier available</span>
+        </div>
+        <p>Look up NCCI workers compensation class codes, rates, and descriptions. Essential for insurance underwriting, payroll, and HR compliance.</p>
+        <div class="card-links">
+          <a href="https://www.npmjs.com/package/@easysolutions906/ncci-api">npm</a>
+          <a href="https://github.com/easysolutions906/ncci-api">GitHub</a>
+        </div>
+        <div class="card-install">
+          <span>$</span> npx -y @easysolutions906/ncci-api
+        </div>
+      </div>
+
+      <!-- Mirth MCP -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Mirth Connect Tools <span class="badge badge-live">Live</span></h3>
+          <span class="card-price">Free tier available</span>
+        </div>
+        <p>Manage Mirth Connect integration engines from AI agents. Deploy channels, monitor message statistics, and troubleshoot errors via MCP.</p>
+        <div class="card-links">
+          <a href="https://www.npmjs.com/package/@easysolutions906/mirth-mcp">npm</a>
+          <a href="https://github.com/easysolutions906/mirth-mcp">GitHub</a>
+        </div>
+        <div class="card-install">
+          <span>$</span> npx -y @easysolutions906/mirth-mcp
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -838,7 +956,7 @@
   <section id="quickstart">
     <div class="section-label">Quick Start</div>
     <h2 class="section-title">Add to Claude Desktop in 60 seconds</h2>
-    <p class="section-subtitle">Paste this into your Claude Desktop config file and restart. All four servers will be available immediately.</p>
+    <p class="section-subtitle">Paste this into your Claude Desktop config file and restart. Pick the servers you need.</p>
 
     <div class="quickstart-block">
       <div class="quickstart-header">
@@ -865,6 +983,26 @@
     <span class="key">"webtools"</span><span class="bracket">: {</span>
       <span class="key">"command"</span>: <span class="str">"npx"</span>,
       <span class="key">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@easysolutions906/mcp-webtools"</span>]
+    <span class="bracket">},</span>
+    <span class="key">"hl7"</span><span class="bracket">: {</span>
+      <span class="key">"command"</span>: <span class="str">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@easysolutions906/hl7-tools"</span>]
+    <span class="bracket">},</span>
+    <span class="key">"routing"</span><span class="bracket">: {</span>
+      <span class="key">"command"</span>: <span class="str">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@easysolutions906/routing-api"</span>]
+    <span class="bracket">},</span>
+    <span class="key">"naics"</span><span class="bracket">: {</span>
+      <span class="key">"command"</span>: <span class="str">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@easysolutions906/naics-api"</span>]
+    <span class="bracket">},</span>
+    <span class="key">"cusip"</span><span class="bracket">: {</span>
+      <span class="key">"command"</span>: <span class="str">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@easysolutions906/cusip-api"</span>]
+    <span class="bracket">},</span>
+    <span class="key">"fips"</span><span class="bracket">: {</span>
+      <span class="key">"command"</span>: <span class="str">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@easysolutions906/fips-api"</span>]
     <span class="bracket">}</span>
   <span class="bracket">}</span>
 <span class="bracket">}</span></pre>
@@ -890,37 +1028,74 @@
             <th>Free</th>
             <th>Starter</th>
             <th>Pro</th>
-            <th>Enterprise</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>OFAC Sanctions Screening <span class="badge badge-live">Live</span></td>
+            <td>OFAC Sanctions Screening</td>
             <td class="tier-free">10 calls/day</td>
-            <td>$4.99/mo &mdash; 2,000 calls</td>
-            <td>$29.99/mo &mdash; 25,000 calls</td>
-            <td>$299.99/mo &mdash; unlimited</td>
+            <td>$4.99/mo</td>
+            <td>$29.99/mo</td>
           </tr>
           <tr>
-            <td>Healthcare Data Tools <span class="badge badge-soon">Coming Soon</span></td>
+            <td>Healthcare Data Tools</td>
             <td class="tier-free">20 calls/day</td>
-            <td>$9.99/mo &mdash; 5,000 calls</td>
-            <td>$49.99/mo &mdash; 50,000 calls</td>
-            <td>$99.99/mo &mdash; unlimited</td>
+            <td>$4.99/mo</td>
+            <td>$29.99/mo</td>
           </tr>
           <tr>
-            <td>Currency &amp; Finance <span class="badge badge-soon">Coming Soon</span></td>
+            <td>HL7 Tools</td>
+            <td class="tier-free">20 calls/day</td>
+            <td>$4.99/mo</td>
+            <td>$29.99/mo</td>
+          </tr>
+          <tr>
+            <td>Currency &amp; Finance</td>
             <td class="tier-free">30 calls/day</td>
-            <td>$4.99/mo &mdash; 5,000 calls</td>
-            <td>$14.99/mo &mdash; 25,000 calls</td>
-            <td>Contact us</td>
+            <td>$4.99/mo</td>
+            <td>$29.99/mo</td>
           </tr>
           <tr>
-            <td>Web Tools <span class="badge badge-soon">Coming Soon</span></td>
+            <td>Web Tools</td>
             <td class="tier-free">20 calls/day</td>
-            <td>$9.99/mo &mdash; 5,000 calls</td>
-            <td>$29.99/mo &mdash; 25,000 calls</td>
-            <td>$49.99/mo &mdash; unlimited</td>
+            <td>$4.99/mo</td>
+            <td>$29.99/mo</td>
+          </tr>
+          <tr>
+            <td>Bank Routing Numbers</td>
+            <td class="tier-free">20 calls/day</td>
+            <td>$4.99/mo</td>
+            <td>$29.99/mo</td>
+          </tr>
+          <tr>
+            <td>NAICS/SIC Codes</td>
+            <td class="tier-free">20 calls/day</td>
+            <td>$4.99/mo</td>
+            <td>$29.99/mo</td>
+          </tr>
+          <tr>
+            <td>CUSIP/ISIN Validator</td>
+            <td class="tier-free">20 calls/day</td>
+            <td>$4.99/mo</td>
+            <td>$29.99/mo</td>
+          </tr>
+          <tr>
+            <td>FIPS County Codes</td>
+            <td class="tier-free">20 calls/day</td>
+            <td>$4.99/mo</td>
+            <td>$29.99/mo</td>
+          </tr>
+          <tr>
+            <td>NCCI Workers Comp</td>
+            <td class="tier-free">20 calls/day</td>
+            <td>$4.99/mo</td>
+            <td>$29.99/mo</td>
+          </tr>
+          <tr>
+            <td>Mirth Connect Tools</td>
+            <td class="tier-free">20 calls/day</td>
+            <td>$4.99/mo</td>
+            <td>$29.99/mo</td>
           </tr>
         </tbody>
       </table>
