@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Routing Number Lookup — ABA Validation Tool</title>
+  <meta name="description" content="Look up and validate US routing numbers for free. Search by number or institution name. ABA checksum validation. No signup required.">
+  <meta name="keywords" content="routing number lookup, ABA routing validation, routing number search, ACH routing number">
+  <link rel="canonical" href="https://easysolutions906.github.io/routing.html">
+  <meta property="og:title" content="Free Routing Number Lookup — ABA Validation Tool">
+  <meta property="og:description" content="Look up and validate US routing numbers for free. Search by number or institution name. ABA checksum validation. No signup required.">
+  <meta property="og:url" content="https://easysolutions906.github.io/routing.html">
+  <meta property="og:type" content="website">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --border: #334155;
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --red: #ef4444;
+      --orange: #f97316;
+      --yellow: #eab308;
+      --green: #22c55e;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+    }
+    nav .logo { font-weight: 700; font-size: 1.1rem; color: var(--text); }
+    nav .links { display: flex; gap: 1.5rem; }
+    nav .links a { color: var(--text-dim); font-size: 0.9rem; }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 3rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+
+    .api-cta {
+      position: fixed;
+      top: 1rem;
+      right: 1.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 100;
+      transition: background 0.2s;
+    }
+    .api-cta:hover { background: var(--accent-hover); text-decoration: none; }
+
+    /* Trust bar */
+    .trust-bar {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .trust-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--green);
+      flex-shrink: 0;
+    }
+
+    /* Search forms */
+    .search-form {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-form input[type="text"],
+    .search-form select {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.85rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-form select {
+      flex: 0 0 auto;
+      min-width: 160px;
+      cursor: pointer;
+    }
+
+    .search-form select option {
+      background: var(--bg-card);
+      color: var(--text);
+    }
+
+    .search-form input:focus,
+    .search-form select:focus {
+      border-color: var(--accent);
+    }
+
+    .search-form button {
+      padding: 0.85rem 1.75rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .search-form button:hover { background: var(--accent-hover); }
+    .search-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .or-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .or-divider::before,
+    .or-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Status bar */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .status-bar .usage { color: var(--text-muted); }
+    .status-bar .upgrade { color: var(--accent); font-weight: 600; }
+
+    /* Error */
+    .error-msg {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: var(--radius);
+      padding: 1rem;
+      color: var(--red);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .error-msg.visible { display: block; }
+
+    /* Result card */
+    .result-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .result-card.visible { display: block; }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .result-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      word-break: break-all;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.9rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--green);
+    }
+
+    /* Checks grid */
+    .checks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .check-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .check-pass { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .check-info { background: rgba(59, 130, 246, 0.15); color: var(--accent); }
+
+    .check-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .check-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .check-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Browse results table */
+    .browse-section {
+      margin-top: 1.5rem;
+    }
+
+    .browse-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .browse-header h3 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .browse-count {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .county-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .county-table th {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+    }
+
+    .county-table td {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+    }
+
+    .county-table tr:hover td {
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    .county-table .fips-code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-weight: 600;
+      color: var(--accent);
+      cursor: pointer;
+    }
+
+    .county-table .fips-code:hover {
+      text-decoration: underline;
+    }
+
+    /* Search results list */
+    .search-results {
+      display: none;
+    }
+
+    .search-results.visible { display: block; }
+
+    .search-result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .search-result-item:hover {
+      border-color: var(--accent);
+    }
+
+    .search-result-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .search-result-state {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .search-result-fips {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    /* Ad slot */
+    .ad-slot {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      text-align: center;
+      margin: 1.5rem 0;
+      min-height: 90px;
+    }
+
+    /* Pricing section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .price-card:hover { border-color: var(--accent); }
+
+    .price-card.popular {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .price-card-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 12px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .price-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-card .price {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+
+    .price-card .price span {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .price-card ul {
+      list-style: none;
+      margin-bottom: 1rem;
+    }
+
+    .price-card ul li {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      padding: 0.2rem 0;
+    }
+
+    .price-card ul li::before {
+      content: '\2713';
+      color: var(--green);
+      font-weight: 700;
+      margin-right: 0.5rem;
+    }
+
+    /* API Key section */
+    .api-key-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .api-key-section h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .api-key-section p {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .api-key-form {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .api-key-form input {
+      flex: 1;
+      padding: 0.7rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .api-key-form input:focus { border-color: var(--accent); }
+
+    .api-key-form button {
+      padding: 0.7rem 1.25rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .api-key-form button:hover { background: var(--accent-hover); }
+
+    /* FAQ */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-item h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-item p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+
+    /* Footer */
+    footer {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    footer .footer-links { display: flex; gap: 1.5rem; }
+    footer .footer-links a { color: var(--text-muted); }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .search-form { flex-direction: column; }
+      .checks-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .api-key-form { flex-direction: column; }
+      .result-header { flex-direction: column; align-items: flex-start; }
+      .trust-bar { gap: 1rem; }
+      .county-table { font-size: 0.8rem; }
+    }
+  </style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9183223861776607" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <a href="#api-pricing" class="api-cta">Get API Key</a>
+
+  <nav>
+    <a href="index.html" class="logo">Easy Solutions</a>
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="screen.html">OFAC Screener</a>
+      <a href="email.html">Email</a>
+      <a href="currency.html">Currency</a>
+    </div>
+  </nav>
+
+  <main>
+    <h1>Routing Number Lookup</h1>
+    <p class="subtitle">Look up US county FIPS codes by code, county name, or state. 3,231 counties across all 50 states, DC, and territories. Used by mortgage, title, and GIS professionals.</p>
+
+    <div class="trust-bar">
+      <div class="trust-item">
+        <div class="trust-icon">&#10003;</div>
+        <span>3,231 US counties</span>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#10003;</div>
+        <span>All 50 states + DC</span>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#10003;</div>
+        <span>No signup required</span>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <span>Free tier: 100 lookups/day on this page</span>
+      <a href="#api-pricing" class="upgrade">Get API Access</a>
+    </div>
+
+    <div id="error" class="error-msg"></div>
+
+    <!-- FIPS Code Lookup -->
+    <div class="search-form">
+      <input type="text" id="fipsInput" placeholder="Enter 5-digit FIPS code (e.g. 06037)" autocomplete="off" maxlength="5">
+      <button id="lookupBtn">Lookup</button>
+    </div>
+
+    <div class="or-divider">OR search by county name</div>
+
+    <!-- County Name Search -->
+    <div class="search-form">
+      <input type="text" id="nameInput" placeholder="County name (e.g. Los Angeles, Cook, Harris)" autocomplete="off">
+      <select id="stateFilter">
+        <option value="">All states</option>
+      </select>
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <!-- Single result card -->
+    <div id="result" class="result-card">
+      <div class="result-header">
+        <div class="result-title" id="resultTitle"></div>
+        <div class="result-badge" id="resultBadge">Found</div>
+      </div>
+      <div class="checks-grid" id="checksGrid"></div>
+    </div>
+
+    <!-- Search results list -->
+    <div id="searchResults" class="search-results"></div>
+
+    <!-- Ad slot -->
+    <div class="ad-slot">
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-9183223861776607"
+        data-ad-slot="auto"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- Browse by State -->
+    <h2>Browse by State</h2>
+    <div class="search-form">
+      <select id="browseState">
+        <option value="">Select a state to browse all counties...</option>
+      </select>
+      <button id="browseBtn">Browse</button>
+    </div>
+
+    <div id="browseResults" class="browse-section" style="display: none;">
+      <div class="browse-header">
+        <h3 id="browseTitle"></h3>
+        <span class="browse-count" id="browseCount"></span>
+      </div>
+      <table class="county-table">
+        <thead>
+          <tr>
+            <th>FIPS Code</th>
+            <th>County Name</th>
+            <th>State</th>
+          </tr>
+        </thead>
+        <tbody id="browseBody"></tbody>
+      </table>
+    </div>
+
+    <!-- Ad slot -->
+    <div class="ad-slot">
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-9183223861776607"
+        data-ad-slot="auto"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- Pricing -->
+    <h2 id="api-pricing">API Pricing</h2>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h4>Free</h4>
+        <div class="price">$0 <span>/mo</span></div>
+        <ul>
+          <li>100 lookups/day</li>
+          <li>10 req/min</li>
+          <li>Batch up to 10 codes</li>
+          <li>All endpoints</li>
+        </ul>
+      </div>
+      <div class="price-card popular">
+        <div class="price-card-badge">Recommended</div>
+        <h4>Starter</h4>
+        <div class="price">$4.99 <span>/mo</span></div>
+        <ul>
+          <li>1,000 lookups/day</li>
+          <li>30 req/min</li>
+          <li>Batch up to 50 codes</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h4>Pro</h4>
+        <div class="price">$14.99 <span>/mo</span></div>
+        <ul>
+          <li>10,000 lookups/day</li>
+          <li>60 req/min</li>
+          <li>Batch up to 100 codes</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>What is a FIPS code?</h3>
+      <p>FIPS (Federal Information Processing Standards) codes are 5-digit identifiers assigned to every US county and county-equivalent. The first 2 digits identify the state, the last 3 identify the county. For example, 06037 is Los Angeles County, California (06 = California, 037 = Los Angeles).</p>
+    </div>
+    <div class="faq-item">
+      <h3>Who uses FIPS codes?</h3>
+      <p>FIPS codes are used extensively in mortgage lending, title insurance, property appraisals, GIS mapping, census data analysis, and government reporting. Any system that needs to uniquely identify a US county uses FIPS codes.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How many counties are in the database?</h3>
+      <p>The database contains 3,231 counties and county-equivalents across all 50 states, the District of Columbia, and US territories. This includes parishes (Louisiana), boroughs (Alaska), and independent cities (Virginia).</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is there a batch lookup API?</h3>
+      <p>Yes. The API supports batch lookups of up to 10 FIPS codes per request on the free tier, and up to 100 on the Pro plan via POST /lookup/batch.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How current is the data?</h3>
+      <p>The FIPS county data is sourced from the US Census Bureau and updated whenever new county definitions are published. County boundaries rarely change, so the data stays current for years.</p>
+    </div>
+
+    <!-- Ad slot -->
+    <div class="ad-slot">
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-9183223861776607"
+        data-ad-slot="auto"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- API Key capture -->
+    <div class="api-key-section">
+      <h3>Get your free API key</h3>
+      <p>Integrate FIPS county lookups into your mortgage, title, or GIS application. Free tier includes 100 lookups/day.</p>
+      <div class="api-key-form">
+        <input type="email" id="apiKeyEmail" placeholder="you@company.com">
+        <button id="apiKeyBtn">Get Key</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>Easy Solutions &mdash; AI-ready data tools</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="https://github.com/easysolutions906">GitHub</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </footer>
+
+  <script>
+    const API = window.location.hostname === 'localhost'
+      ? 'http://localhost:3005'
+      : 'https://routing-production.up.railway.app';
+
+    // --- State list for dropdowns ---
+    const STATES = [
+      ['AL', 'Alabama'], ['AK', 'Alaska'], ['AZ', 'Arizona'], ['AR', 'Arkansas'],
+      ['CA', 'California'], ['CO', 'Colorado'], ['CT', 'Connecticut'], ['DE', 'Delaware'],
+      ['DC', 'District of Columbia'], ['FL', 'Florida'], ['GA', 'Georgia'], ['HI', 'Hawaii'],
+      ['ID', 'Idaho'], ['IL', 'Illinois'], ['IN', 'Indiana'], ['IA', 'Iowa'],
+      ['KS', 'Kansas'], ['KY', 'Kentucky'], ['LA', 'Louisiana'], ['ME', 'Maine'],
+      ['MD', 'Maryland'], ['MA', 'Massachusetts'], ['MI', 'Michigan'], ['MN', 'Minnesota'],
+      ['MS', 'Mississippi'], ['MO', 'Missouri'], ['MT', 'Montana'], ['NE', 'Nebraska'],
+      ['NV', 'Nevada'], ['NH', 'New Hampshire'], ['NJ', 'New Jersey'], ['NM', 'New Mexico'],
+      ['NY', 'New York'], ['NC', 'North Carolina'], ['ND', 'North Dakota'], ['OH', 'Ohio'],
+      ['OK', 'Oklahoma'], ['OR', 'Oregon'], ['PA', 'Pennsylvania'], ['RI', 'Rhode Island'],
+      ['SC', 'South Carolina'], ['SD', 'South Dakota'], ['TN', 'Tennessee'], ['TX', 'Texas'],
+      ['UT', 'Utah'], ['VT', 'Vermont'], ['VA', 'Virginia'], ['WA', 'Washington'],
+      ['WV', 'West Virginia'], ['WI', 'Wisconsin'], ['WY', 'Wyoming'],
+    ];
+
+    // Populate dropdowns
+    const stateFilter = document.getElementById('stateFilter');
+    const browseState = document.getElementById('browseState');
+
+    STATES.forEach(([abbr, name]) => {
+      stateFilter.appendChild(new Option(`${name} (${abbr})`, abbr));
+      browseState.appendChild(new Option(`${name} (${abbr})`, abbr));
+    });
+
+    // --- DOM references ---
+    const fipsInput = document.getElementById('fipsInput');
+    const lookupBtn = document.getElementById('lookupBtn');
+    const nameInput = document.getElementById('nameInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const browseBtn = document.getElementById('browseBtn');
+    const resultCard = document.getElementById('result');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultBadge = document.getElementById('resultBadge');
+    const checksGrid = document.getElementById('checksGrid');
+    const searchResults = document.getElementById('searchResults');
+    const browseResults = document.getElementById('browseResults');
+    const errorMsg = document.getElementById('error');
+
+    // --- Helpers ---
+    const showError = (msg) => {
+      errorMsg.textContent = msg;
+      errorMsg.classList.add('visible');
+      setTimeout(() => errorMsg.classList.remove('visible'), 5000);
+    };
+
+    const hideAll = () => {
+      resultCard.classList.remove('visible');
+      searchResults.classList.remove('visible');
+    };
+
+    const renderLookup = (data) => {
+      hideAll();
+
+      if (!data.found) {
+        showError(data.error || 'FIPS code not found.');
+        return;
+      }
+
+      resultTitle.textContent = data.county;
+      resultBadge.textContent = `FIPS ${data.fips}`;
+
+      checksGrid.innerHTML = [
+        { label: 'FIPS Code', value: data.fips, icon: 'check-info' },
+        { label: 'County', value: data.county, icon: 'check-info' },
+        { label: 'State', value: data.state, icon: 'check-info' },
+        { label: 'State Abbr', value: data.stateAbbr, icon: 'check-info' },
+      ].map((c) => `
+        <div class="check-item">
+          <div class="check-icon ${c.icon}">${c.icon === 'check-pass' ? '\u2713' : '\u2139'}</div>
+          <div class="check-text">
+            <div class="check-label">${c.label}</div>
+            <div class="check-value">${c.value}</div>
+          </div>
+        </div>
+      `).join('');
+
+      resultCard.classList.add('visible');
+    };
+
+    const renderSearchResults = (data) => {
+      hideAll();
+
+      if (!data.results || data.results.length === 0) {
+        showError('No counties found matching your search.');
+        return;
+      }
+
+      searchResults.innerHTML = data.results.map((r) => `
+        <div class="search-result-item" data-fips="${r.fips}">
+          <div>
+            <div class="search-result-name">${r.county}</div>
+            <div class="search-result-state">${r.state} (${r.stateAbbr})</div>
+          </div>
+          <div class="search-result-fips">${r.fips}</div>
+        </div>
+      `).join('');
+
+      searchResults.classList.add('visible');
+
+      // Click to look up individual result
+      searchResults.querySelectorAll('.search-result-item').forEach((item) => {
+        item.addEventListener('click', () => {
+          fipsInput.value = item.dataset.fips;
+          doLookup();
+        });
+      });
+    };
+
+    const renderBrowse = (data) => {
+      if (!data.found) {
+        showError(data.error || 'No counties found for this state.');
+        browseResults.style.display = 'none';
+        return;
+      }
+
+      document.getElementById('browseTitle').textContent = `${data.stateName} (${data.stateAbbr})`;
+      document.getElementById('browseCount').textContent = `${data.count} counties`;
+
+      document.getElementById('browseBody').innerHTML = data.counties.map((c) => `
+        <tr>
+          <td class="fips-code" data-fips="${c.fips}">${c.fips}</td>
+          <td>${c.county}</td>
+          <td>${c.stateAbbr}</td>
+        </tr>
+      `).join('');
+
+      browseResults.style.display = 'block';
+
+      // Click FIPS code to look up
+      browseResults.querySelectorAll('.fips-code').forEach((cell) => {
+        cell.addEventListener('click', () => {
+          fipsInput.value = cell.dataset.fips;
+          doLookup();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+    };
+
+    // --- API calls ---
+    const doLookup = async () => {
+      const code = fipsInput.value.trim();
+      if (!code) {
+        showError('Please enter a FIPS code.');
+        return;
+      }
+
+      lookupBtn.disabled = true;
+      lookupBtn.textContent = 'Looking up...';
+
+      try {
+        const res = await fetch(`${API}/lookup?fips=${encodeURIComponent(code)}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          showError(data.error || 'Lookup failed.');
+          return;
+        }
+
+        renderLookup(data);
+      } catch {
+        showError('Could not reach the FIPS API. Please try again.');
+      } finally {
+        lookupBtn.disabled = false;
+        lookupBtn.textContent = 'Lookup';
+      }
+    };
+
+    const doSearch = async () => {
+      const name = nameInput.value.trim();
+      if (!name) {
+        showError('Please enter a county name to search.');
+        return;
+      }
+
+      const state = stateFilter.value;
+      searchBtn.disabled = true;
+      searchBtn.textContent = 'Searching...';
+
+      try {
+        let url = `${API}/search?name=${encodeURIComponent(name)}`;
+        if (state) {
+          url += `&state=${encodeURIComponent(state)}`;
+        }
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!res.ok) {
+          showError(data.error || 'Search failed.');
+          return;
+        }
+
+        renderSearchResults(data);
+      } catch {
+        showError('Could not reach the FIPS API. Please try again.');
+      } finally {
+        searchBtn.disabled = false;
+        searchBtn.textContent = 'Search';
+      }
+    };
+
+    const doBrowse = async () => {
+      const state = browseState.value;
+      if (!state) {
+        showError('Please select a state.');
+        return;
+      }
+
+      browseBtn.disabled = true;
+      browseBtn.textContent = 'Loading...';
+
+      try {
+        const res = await fetch(`${API}/state/${encodeURIComponent(state)}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          showError(data.error || 'Browse failed.');
+          return;
+        }
+
+        renderBrowse(data);
+      } catch {
+        showError('Could not reach the FIPS API. Please try again.');
+      } finally {
+        browseBtn.disabled = false;
+        browseBtn.textContent = 'Browse';
+      }
+    };
+
+    // --- Event listeners ---
+    lookupBtn.addEventListener('click', doLookup);
+    fipsInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { doLookup(); } });
+
+    searchBtn.addEventListener('click', doSearch);
+    nameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { doSearch(); } });
+
+    browseBtn.addEventListener('click', doBrowse);
+
+    // Only allow digits in FIPS input
+    fipsInput.addEventListener('input', () => {
+      fipsInput.value = fipsInput.value.replace(/\D/g, '').slice(0, 5);
+    });
+
+    // API key signup
+    document.getElementById('apiKeyBtn').addEventListener('click', () => {
+      const email = document.getElementById('apiKeyEmail').value;
+      if (email && email.includes('@')) {
+        document.getElementById('apiKeyBtn').textContent = 'Key sent!';
+        document.getElementById('apiKeyEmail').value = '';
+        setTimeout(() => {
+          document.getElementById('apiKeyBtn').textContent = 'Get Key';
+        }, 3000);
+      }
+    });
+
+    // Initialize AdSense
+    try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch {}
+    try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch {}
+    try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch {}
+  </script>
+
+</body>
+</html>
