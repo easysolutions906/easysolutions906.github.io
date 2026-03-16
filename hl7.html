@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free HL7 Parser Online — HL7 Viewer, Validator, and FHIR R4 Converter</title>
+  <meta name="description" content="Free online HL7 parser and viewer. Paste raw HL7 v2 messages to see parsed segments, named fields, validation issues, and FHIR R4 conversion. No signup required. Built for healthcare developers.">
+  <meta name="keywords" content="HL7 parser online, HL7 viewer, HL7 to FHIR converter online, HL7 validator, HL7 message parser, HL7 v2 parser, HL7 segment viewer, parse HL7 message, HL7 FHIR converter, HL7 test message generator">
+  <link rel="canonical" href="https://easysolutions906.github.io/hl7.html">
+  <meta property="og:title" content="Free HL7 Parser — Viewer, Validator, FHIR R4 Converter">
+  <meta property="og:description" content="Paste raw HL7 v2 messages to parse, validate, and convert to FHIR R4. 600+ field definitions. No signup required.">
+  <meta property="og:url" content="https://easysolutions906.github.io/hl7.html">
+  <meta property="og:type" content="website">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --border: #334155;
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --red: #ef4444;
+      --orange: #f97316;
+      --yellow: #eab308;
+      --green: #22c55e;
+      --purple: #a855f7;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+    }
+    nav .logo { font-weight: 700; font-size: 1.1rem; color: var(--text); }
+    nav .links { display: flex; gap: 1.5rem; }
+    nav .links a { color: var(--text-dim); font-size: 0.9rem; }
+
+    /* Main */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 3rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+
+    /* Trust signals */
+    .trust-bar {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+    .trust-item { display: flex; align-items: center; gap: 0.4rem; }
+
+    /* Sticky API CTA */
+    .api-cta {
+      position: fixed;
+      top: 1rem;
+      right: 1.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 100;
+      transition: background 0.2s;
+    }
+    .api-cta:hover { background: var(--accent-hover); text-decoration: none; }
+
+    /* Textarea */
+    .hl7-input {
+      width: 100%;
+      min-height: 200px;
+      padding: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .hl7-input:focus { border-color: var(--accent); }
+    .hl7-input::placeholder { color: var(--text-muted); }
+
+    /* Action buttons row */
+    .action-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 0.85rem 1.75rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-secondary {
+      padding: 0.85rem 1.75rem;
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--text); }
+    .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Status bar */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+    .status-bar .usage { color: var(--text-muted); }
+    .status-bar .upgrade { color: var(--accent); font-weight: 600; }
+
+    /* API Key section */
+    .api-key-section { margin-bottom: 1.5rem; }
+    .api-key-toggle {
+      font-size: 0.85rem;
+      color: var(--accent);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .api-key-toggle:hover { text-decoration: underline; }
+    .api-key-body {
+      display: none;
+      margin-top: 0.75rem;
+      padding: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .api-key-body.open { display: block; }
+    .api-key-row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .api-key-row input {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-family: monospace;
+      outline: none;
+    }
+    .api-key-row input:focus { border-color: var(--accent); }
+    .api-key-row button {
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .api-key-row button:hover { background: var(--accent-hover); }
+    .api-key-status {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--green);
+      display: none;
+    }
+    .pro-badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--accent);
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-left: 0.5rem;
+    }
+
+    /* Results area */
+    #results { margin-bottom: 2rem; }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-muted);
+    }
+    .empty-state p { margin-bottom: 0.5rem; }
+
+    .loading {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-dim);
+    }
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-box {
+      padding: 1rem;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      border-radius: var(--radius);
+      color: var(--red);
+      font-size: 0.9rem;
+    }
+
+    /* Segment cards */
+    .segment-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 0.75rem;
+      transition: border-color 0.2s;
+    }
+    .segment-card.seg-msh { border-left: 4px solid var(--accent); }
+    .segment-card.seg-pid { border-left: 4px solid var(--green); }
+    .segment-card.seg-pv1, .segment-card.seg-pv2 { border-left: 4px solid var(--purple); }
+    .segment-card.seg-obr, .segment-card.seg-obx { border-left: 4px solid var(--orange); }
+    .segment-card.seg-dg1 { border-left: 4px solid var(--red); }
+    .segment-card.seg-in1, .segment-card.seg-in2 { border-left: 4px solid var(--yellow); }
+    .segment-card.seg-al1 { border-left: 4px solid #f472b6; }
+    .segment-card.seg-nk1 { border-left: 4px solid #06b6d4; }
+    .segment-card.seg-orc { border-left: 4px solid #8b5cf6; }
+    .segment-card.seg-rxa { border-left: 4px solid #14b8a6; }
+    .segment-card.seg-evn { border-left: 4px solid #a3e635; }
+    .segment-card.seg-default { border-left: 4px solid var(--text-muted); }
+
+    .segment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .segment-id {
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .segment-name {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+      font-size: 0.85rem;
+    }
+    .field-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 0.5rem;
+      padding: 0.25rem 0;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    }
+    .field-row:last-child { border-bottom: none; }
+    .field-path {
+      color: var(--text-muted);
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .field-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .field-name {
+      color: var(--text-dim);
+      font-size: 0.75rem;
+    }
+    .field-value {
+      color: var(--text);
+      word-break: break-all;
+    }
+    .field-empty { color: var(--text-muted); font-style: italic; }
+
+    /* Validation issues */
+    .validation-results { margin-top: 1rem; }
+    .issue-card {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+    }
+    .issue-card.issue-error {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: var(--red);
+    }
+    .issue-card.issue-warning {
+      background: rgba(249, 115, 22, 0.08);
+      border: 1px solid rgba(249, 115, 22, 0.2);
+      color: var(--orange);
+    }
+    .issue-card.issue-info {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      color: var(--accent);
+    }
+    .issue-severity {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+      margin-right: 0.5rem;
+    }
+    .validation-valid {
+      padding: 1.5rem;
+      text-align: center;
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      border-radius: var(--radius);
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    /* FHIR output */
+    .fhir-output {
+      margin-top: 1rem;
+    }
+    .fhir-json {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      overflow-x: auto;
+      max-height: 500px;
+      overflow-y: auto;
+      white-space: pre;
+      line-height: 1.4;
+    }
+    .copy-btn {
+      padding: 0.4rem 0.8rem;
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .copy-btn:hover { border-color: var(--accent); color: var(--text); }
+
+    /* Generate section */
+    .generate-section {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .generate-section h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .generate-section .gen-subtitle {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .generate-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .generate-row select {
+      padding: 0.65rem 0.8rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+      min-width: 200px;
+    }
+    .generate-output {
+      display: none;
+      margin-top: 1rem;
+    }
+    .generate-textarea {
+      width: 100%;
+      min-height: 150px;
+      padding: 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      resize: vertical;
+      outline: none;
+    }
+    .generate-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    /* Tabs for results */
+    .result-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .result-tab {
+      padding: 0.65rem 1.25rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .result-tab:hover { color: var(--text-dim); }
+    .result-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Pricing inline */
+    .pricing-section {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .pricing-section h3 { font-size: 1.1rem; margin-bottom: 1rem; text-align: center; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.75rem;
+    }
+    .price-card {
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+    }
+    .price-card.featured { border-color: var(--accent); background: rgba(59,130,246,0.05); }
+    .price-card .plan-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem; }
+    .price-card .plan-price { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+    .price-card .plan-price span { font-size: 0.75rem; font-weight: 400; color: var(--text-muted); }
+    .price-card .plan-detail { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .price-card .plan-btn {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .price-card .plan-btn:hover { background: var(--accent-hover); text-decoration: none; }
+    .price-card .plan-btn.free { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
+
+    /* CTA banner */
+    .cta-banner {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: rgba(59, 130, 246, 0.06);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: var(--radius);
+      text-align: center;
+    }
+    .cta-banner h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .cta-banner p { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1rem; }
+    .cta-banner .btn {
+      display: inline-block;
+      padding: 0.65rem 1.5rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-banner .btn:hover { background: var(--accent-hover); text-decoration: none; }
+
+    /* Footer */
+    footer {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--text-dim); }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      .action-row { flex-direction: column; }
+      .action-row button { width: 100%; }
+      .field-row { grid-template-columns: 1fr; gap: 0.15rem; }
+      .generate-row { flex-direction: column; }
+      .generate-row select { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <a class="api-cta" href="https://github.com/easysolutions906/hl7-tools">Get API Access</a>
+  <nav>
+    <a href="/" class="logo">EasySolutions</a>
+    <div class="links">
+      <a href="/">Home</a>
+      <a href="/screen.html">OFAC Screening</a>
+      <a href="https://github.com/easysolutions906/hl7-tools">GitHub</a>
+      <a href="https://mcp.so/server/hl7-tools/easysolutions906">mcp.so</a>
+    </div>
+  </nav>
+
+  <main>
+    <h1>HL7 Message Parser &amp; Viewer</h1>
+    <p class="subtitle">Paste raw HL7 v2 messages to parse, validate, and convert to FHIR R4. Every field labeled with CARISTIX names, color-coded by segment type. Built for healthcare developers.</p>
+
+    <div class="trust-bar">
+      <span class="trust-item">600+ field definitions</span>
+      <span class="trust-item">Versions 2.3 - 2.8</span>
+      <span class="trust-item">FHIR R4 conversion</span>
+      <span class="trust-item">No signup required</span>
+    </div>
+
+    <label for="hl7-input" style="font-size:0.85rem;color:var(--text-muted);display:block;margin-bottom:0.5rem;">Paste your HL7 v2 message below</label>
+    <textarea id="hl7-input" class="hl7-input" placeholder="MSH|^~\&|SENDING_APP|SENDING_FAC|RECEIVING_APP|RECEIVING_FAC|20260316120000||ADT^A01|MSG00001|P|2.5.1
+EVN|A01|20260316120000
+PID|1||123456^^^MRN||DOE^JOHN^M||19800115|M|||123 MAIN ST^^ANYTOWN^NY^12345
+PV1|1|I|ICU^101^A|||||||ATT^ATTENDING^DOC|||||||||||||||||||||||||||20260316120000"></textarea>
+
+    <div class="action-row">
+      <button class="btn-primary" id="parse-btn">Parse Message</button>
+      <button class="btn-secondary" id="validate-btn">Validate</button>
+      <button class="btn-secondary" id="fhir-btn">Convert to FHIR</button>
+    </div>
+
+    <div class="api-key-section">
+      <button class="api-key-toggle" id="api-key-toggle" type="button">Have an API key?</button>
+      <div class="api-key-body" id="api-key-body">
+        <div class="api-key-row">
+          <input type="password" id="api-key-input" placeholder="Enter your API key">
+          <button id="api-key-save" type="button">Save</button>
+          <button id="api-key-clear" type="button" style="background:transparent;border:1px solid var(--border);color:var(--text-dim)">Clear</button>
+        </div>
+        <div class="api-key-status" id="api-key-status">API key saved. Pro features enabled.</div>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <span id="status-text">Ready to parse</span>
+      <span class="usage" id="usage-text"></span>
+    </div>
+
+    <div id="results">
+      <div class="empty-state">
+        <p>Paste an HL7 v2 message above and click Parse Message to see structured output.</p>
+        <p>Supports ADT, ORU, ORM, VXU, SIU, MDM, and more. Versions 2.3 through 2.8.</p>
+      </div>
+    </div>
+
+    <div class="generate-section">
+      <h2>Generate Test Messages</h2>
+      <p class="gen-subtitle">Generate realistic sample HL7 messages for testing your integrations.</p>
+      <div class="generate-row">
+        <select id="gen-type">
+          <option value="ADT^A01">ADT^A01 - Admit</option>
+          <option value="ADT^A02">ADT^A02 - Transfer</option>
+          <option value="ADT^A03">ADT^A03 - Discharge</option>
+          <option value="ADT^A04">ADT^A04 - Register</option>
+          <option value="ADT^A08">ADT^A08 - Update</option>
+          <option value="ORU^R01">ORU^R01 - Lab Result</option>
+          <option value="ORM^O01">ORM^O01 - Order</option>
+          <option value="SIU^S12">SIU^S12 - Schedule</option>
+          <option value="VXU^V04">VXU^V04 - Immunization</option>
+          <option value="MDM^T02">MDM^T02 - Document</option>
+          <option value="DFT^P03">DFT^P03 - Charge</option>
+          <option value="RDE^O11">RDE^O11 - Pharmacy</option>
+        </select>
+        <button class="btn-primary" id="gen-btn" style="padding:0.65rem 1.25rem;font-size:0.9rem;">Generate</button>
+      </div>
+      <div class="generate-output" id="gen-output">
+        <textarea class="generate-textarea" id="gen-textarea" readonly></textarea>
+        <div class="generate-actions">
+          <button class="copy-btn" id="gen-copy-btn">Copy to Clipboard</button>
+          <button class="copy-btn" id="gen-parse-btn">Parse This Message</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pricing-section" id="pricing">
+      <h3>HL7 Tools API Plans</h3>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="plan-name">Free</div>
+          <div class="plan-price">$0</div>
+          <div class="plan-detail">20 calls/day</div>
+          <div class="plan-detail">5/min rate limit</div>
+          <div class="plan-detail">All endpoints</div>
+          <span class="plan-btn free">Current plan</span>
+        </div>
+        <div class="price-card featured">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price">$9.99<span>/mo</span></div>
+          <div class="plan-detail">500 calls/day</div>
+          <div class="plan-detail">30/min rate limit</div>
+          <div class="plan-detail">API key + priority</div>
+          <button class="plan-btn" onclick="getCheckout('starter')">Subscribe</button>
+        </div>
+        <div class="price-card">
+          <div class="plan-name">Pro</div>
+          <div class="plan-price">$29.99<span>/mo</span></div>
+          <div class="plan-detail">5,000 calls/day</div>
+          <div class="plan-detail">100/min rate limit</div>
+          <div class="plan-detail">API key + SLA</div>
+          <button class="plan-btn" onclick="getCheckout('pro')">Subscribe</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-banner">
+      <h3>Need programmatic access?</h3>
+      <p>The HL7 Tools API gives you parse, validate, generate, and FHIR conversion endpoints. Also available as an MCP server for Claude, Cursor, and Windsurf.</p>
+      <a class="btn" href="https://github.com/easysolutions906/hl7-tools">View API Docs</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>HL7 is a registered trademark of Health Level Seven International. This tool is for development and testing purposes. Not intended for clinical use.</p>
+    <p style="margin-top: 0.5rem;">
+      <a href="/">Home</a> &middot; <a href="/screen.html">OFAC Screening</a> &middot; <a href="https://github.com/easysolutions906/hl7-tools">API Docs</a> &middot; <a href="https://mcp.so/server/hl7-tools/easysolutions906">MCP Server</a>
+    </p>
+  </footer>
+
+  <script>
+    const API = window.location.hostname === 'localhost'
+      ? 'http://localhost:3200'
+      : 'https://hl7-tools-production.up.railway.app';
+
+    const FREE_LIMIT = 10;
+    const STORAGE_KEY = 'hl7_web_usage';
+    const API_KEY_STORAGE = 'hl7_api_key';
+
+    // --- Segment color map ---
+    const SEGMENT_COLORS = {
+      MSH: 'seg-msh', EVN: 'seg-evn',
+      PID: 'seg-pid', PD1: 'seg-pid', NK1: 'seg-nk1',
+      PV1: 'seg-pv1', PV2: 'seg-pv2',
+      OBR: 'seg-obr', OBX: 'seg-obx',
+      DG1: 'seg-dg1',
+      IN1: 'seg-in1', IN2: 'seg-in2',
+      AL1: 'seg-al1',
+      ORC: 'seg-orc',
+      RXA: 'seg-rxa', RXE: 'seg-rxa', RXR: 'seg-rxa',
+    };
+
+    // --- DOM references ---
+    const hl7Input = document.getElementById('hl7-input');
+    const parseBtn = document.getElementById('parse-btn');
+    const validateBtn = document.getElementById('validate-btn');
+    const fhirBtn = document.getElementById('fhir-btn');
+    const statusText = document.getElementById('status-text');
+    const usageText = document.getElementById('usage-text');
+    const resultsDiv = document.getElementById('results');
+    const apiKeyToggle = document.getElementById('api-key-toggle');
+    const apiKeyBody = document.getElementById('api-key-body');
+    const apiKeyInput = document.getElementById('api-key-input');
+    const apiKeySave = document.getElementById('api-key-save');
+    const apiKeyClear = document.getElementById('api-key-clear');
+    const apiKeyStatus = document.getElementById('api-key-status');
+    const genType = document.getElementById('gen-type');
+    const genBtn = document.getElementById('gen-btn');
+    const genOutput = document.getElementById('gen-output');
+    const genTextarea = document.getElementById('gen-textarea');
+    const genCopyBtn = document.getElementById('gen-copy-btn');
+    const genParseBtn = document.getElementById('gen-parse-btn');
+
+    // --- State ---
+    let lastParseResult = null;
+    let lastValidateResult = null;
+    let lastFhirResult = null;
+
+    const today = () => new Date().toISOString().slice(0, 10);
+
+    // --- API Key Management ---
+
+    const getApiKey = () => localStorage.getItem(API_KEY_STORAGE) || '';
+    const hasApiKey = () => getApiKey().length > 0;
+
+    const getAuthHeaders = () => {
+      const headers = { 'Content-Type': 'application/json' };
+      const key = getApiKey();
+      if (key) { headers['x-api-key'] = key; }
+      return headers;
+    };
+
+    const initApiKey = () => {
+      const key = getApiKey();
+      if (key) {
+        apiKeyInput.value = key;
+        apiKeyStatus.style.display = 'block';
+        apiKeyBody.classList.add('open');
+        apiKeyToggle.innerHTML = 'API Key <span class="pro-badge">Pro</span>';
+      }
+    };
+
+    apiKeyToggle.addEventListener('click', () => {
+      apiKeyBody.classList.toggle('open');
+    });
+
+    apiKeySave.addEventListener('click', () => {
+      const key = apiKeyInput.value.trim();
+      if (!key) { return; }
+      localStorage.setItem(API_KEY_STORAGE, key);
+      apiKeyStatus.style.display = 'block';
+      apiKeyToggle.innerHTML = 'API Key <span class="pro-badge">Pro</span>';
+      updateUsageDisplay();
+    });
+
+    apiKeyClear.addEventListener('click', () => {
+      localStorage.removeItem(API_KEY_STORAGE);
+      apiKeyInput.value = '';
+      apiKeyStatus.style.display = 'none';
+      apiKeyToggle.textContent = 'Have an API key?';
+      updateUsageDisplay();
+    });
+
+    // --- Usage tracking ---
+
+    const getUsage = () => {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) { return { date: today(), count: 0 }; }
+        const data = JSON.parse(raw);
+        return data.date === today() ? data : { date: today(), count: 0 };
+      } catch { return { date: today(), count: 0 }; }
+    };
+
+    const incrementUsage = (n = 1) => {
+      const usage = getUsage();
+      usage.count += n;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(usage));
+      updateUsageDisplay();
+    };
+
+    const updateUsageDisplay = () => {
+      const usage = getUsage();
+      if (hasApiKey()) {
+        usageText.innerHTML = usage.count + ' parses today <span class="pro-badge">Pro</span>';
+      } else {
+        usageText.textContent = usage.count + '/' + FREE_LIMIT + ' free parses today';
+      }
+    };
+
+    const checkLimit = () => {
+      if (hasApiKey()) { return true; }
+      const usage = getUsage();
+      if (usage.count >= FREE_LIMIT) {
+        resultsDiv.innerHTML = '<div class="error-box">Daily free limit reached (' + FREE_LIMIT + ' parses). Come back tomorrow or subscribe for unlimited access.</div>' +
+          '<div class="cta-banner"><h3>Need more parses?</h3><p>Unlimited parsing starts at $9.99/month with API access.</p><a class="btn" href="#pricing">View Plans</a></div>';
+        return false;
+      }
+      return true;
+    };
+
+    // --- Utilities ---
+
+    const escapeHtml = (str) => {
+      const div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+    };
+
+    const setLoading = (text) => {
+      resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>' + escapeHtml(text) + '</div>';
+    };
+
+    const setButtons = (disabled) => {
+      parseBtn.disabled = disabled;
+      validateBtn.disabled = disabled;
+      fhirBtn.disabled = disabled;
+    };
+
+    const getMessage = () => hl7Input.value.trim();
+
+    // --- API calls ---
+
+    const apiCall = async (endpoint, body) => {
+      const res = await fetch(API + endpoint, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (data.error) { throw new Error(data.error); }
+      return data;
+    };
+
+    // --- Rendering: Parsed view ---
+
+    const renderParsed = (data) => {
+      const segments = data.segments || [];
+      if (segments.length === 0) {
+        return '<div class="error-box">No segments found in the message.</div>';
+      }
+
+      return segments.map((seg) => {
+        const segId = (seg.id || seg.segment || 'UNK').toUpperCase();
+        const segName = seg.name || segId;
+        const colorClass = SEGMENT_COLORS[segId] || 'seg-default';
+        const fields = seg.fields || [];
+
+        const fieldHtml = fields.map((f) => {
+          const path = segId + '-' + (f.position || f.num || '?');
+          const name = f.name || '';
+          const value = f.value;
+          const isEmpty = value === '' || value === null || value === undefined;
+
+          return '<div class="field-row">' +
+            '<span class="field-path">' + escapeHtml(path) + '</span>' +
+            '<div class="field-info">' +
+              '<span class="field-name">' + escapeHtml(name) + (f.dataType ? ' (' + escapeHtml(f.dataType) + ')' : '') + '</span>' +
+              (isEmpty
+                ? '<span class="field-value field-empty">(empty)</span>'
+                : '<span class="field-value">' + escapeHtml(String(value)) + '</span>') +
+            '</div>' +
+          '</div>';
+        }).join('');
+
+        return '<div class="segment-card ' + colorClass + '">' +
+          '<div class="segment-header">' +
+            '<span class="segment-id">' + escapeHtml(segId) + '</span>' +
+            '<span class="segment-name">' + escapeHtml(segName) + '</span>' +
+          '</div>' +
+          '<div class="field-grid">' + fieldHtml + '</div>' +
+        '</div>';
+      }).join('');
+    };
+
+    // --- Rendering: Validation ---
+
+    const renderValidation = (data) => {
+      const issues = data.issues || [];
+      if (issues.length === 0) {
+        return '<div class="validation-valid">No validation issues found. Message structure looks correct.</div>';
+      }
+
+      const counts = { error: 0, warning: 0, info: 0 };
+      issues.forEach((i) => { counts[i.severity || 'info']++; });
+
+      let html = '<div style="margin-bottom:1rem;font-size:0.9rem;color:var(--text-dim)">' +
+        '<strong>' + issues.length + '</strong> issue' + (issues.length === 1 ? '' : 's') + ' found: ' +
+        (counts.error ? '<span style="color:var(--red)">' + counts.error + ' error' + (counts.error === 1 ? '' : 's') + '</span> ' : '') +
+        (counts.warning ? '<span style="color:var(--orange)">' + counts.warning + ' warning' + (counts.warning === 1 ? '' : 's') + '</span> ' : '') +
+        (counts.info ? '<span style="color:var(--accent)">' + counts.info + ' info</span>' : '') +
+      '</div>';
+
+      html += issues.map((issue) => {
+        const severity = issue.severity || 'info';
+        return '<div class="issue-card issue-' + severity + '">' +
+          '<span class="issue-severity">' + severity + '</span>' +
+          escapeHtml(issue.message || issue.description || 'Unknown issue') +
+          (issue.segment ? ' <span style="opacity:0.7">(' + escapeHtml(issue.segment + (issue.field ? '-' + issue.field : '')) + ')</span>' : '') +
+        '</div>';
+      }).join('');
+
+      return html;
+    };
+
+    // --- Rendering: FHIR ---
+
+    const renderFhir = (data) => {
+      const json = JSON.stringify(data, null, 2);
+      return '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem">' +
+        '<span style="font-size:0.9rem;font-weight:600">FHIR R4 Bundle</span>' +
+        '<button class="copy-btn" id="fhir-copy-btn">Copy JSON</button>' +
+      '</div>' +
+      '<div class="fhir-json">' + escapeHtml(json) + '</div>';
+    };
+
+    // --- Tabbed results ---
+
+    const showTabbedResults = (activeTab) => {
+      const tabs = ['parsed', 'validation', 'fhir'];
+      const hasData = {
+        parsed: lastParseResult !== null,
+        validation: lastValidateResult !== null,
+        fhir: lastFhirResult !== null,
+      };
+
+      let html = '<div class="result-tabs">';
+      tabs.forEach((tab) => {
+        if (hasData[tab]) {
+          const label = { parsed: 'Parsed', validation: 'Validation', fhir: 'FHIR R4' }[tab];
+          const cls = tab === activeTab ? ' active' : '';
+          html += '<button class="result-tab' + cls + '" data-tab="' + tab + '">' + label + '</button>';
+        }
+      });
+      html += '</div>';
+
+      tabs.forEach((tab) => {
+        if (hasData[tab]) {
+          const cls = tab === activeTab ? ' active' : '';
+          const content = {
+            parsed: () => renderParsed(lastParseResult),
+            validation: () => renderValidation(lastValidateResult),
+            fhir: () => renderFhir(lastFhirResult),
+          }[tab]();
+          html += '<div class="tab-panel' + cls + '" id="tab-' + tab + '">' + content + '</div>';
+        }
+      });
+
+      resultsDiv.innerHTML = html;
+
+      // Wire up tab switching
+      resultsDiv.querySelectorAll('.result-tab').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          resultsDiv.querySelectorAll('.result-tab').forEach((t) => t.classList.remove('active'));
+          resultsDiv.querySelectorAll('.tab-panel').forEach((p) => p.classList.remove('active'));
+          btn.classList.add('active');
+          const panel = document.getElementById('tab-' + btn.dataset.tab);
+          if (panel) { panel.classList.add('active'); }
+        });
+      });
+
+      // Wire up FHIR copy button if present
+      const fhirCopyBtn = document.getElementById('fhir-copy-btn');
+      if (fhirCopyBtn) {
+        fhirCopyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(JSON.stringify(lastFhirResult, null, 2));
+          fhirCopyBtn.textContent = 'Copied!';
+          setTimeout(() => { fhirCopyBtn.textContent = 'Copy JSON'; }, 2000);
+        });
+      }
+    };
+
+    // --- Parse ---
+
+    const doParse = async () => {
+      const message = getMessage();
+      if (!message) { return; }
+      if (!checkLimit()) { return; }
+
+      setButtons(true);
+      statusText.textContent = 'Parsing...';
+      setLoading('Parsing HL7 message...');
+
+      try {
+        const data = await apiCall('/parse', { message });
+        lastParseResult = data;
+        incrementUsage();
+        showTabbedResults('parsed');
+        statusText.textContent = (data.segments || []).length + ' segment' + ((data.segments || []).length === 1 ? '' : 's') + ' parsed';
+      } catch (err) {
+        resultsDiv.innerHTML = '<div class="error-box">Parse failed: ' + escapeHtml(err.message) + '</div>';
+        statusText.textContent = 'Error';
+      }
+
+      setButtons(false);
+    };
+
+    // --- Validate ---
+
+    const doValidate = async () => {
+      const message = getMessage();
+      if (!message) { return; }
+      if (!checkLimit()) { return; }
+
+      setButtons(true);
+      statusText.textContent = 'Validating...';
+      setLoading('Validating HL7 message...');
+
+      try {
+        const data = await apiCall('/validate', { message });
+        lastValidateResult = data;
+        incrementUsage();
+        showTabbedResults('validation');
+        const issues = data.issues || [];
+        statusText.textContent = issues.length === 0
+          ? 'Validation passed'
+          : issues.length + ' issue' + (issues.length === 1 ? '' : 's') + ' found';
+      } catch (err) {
+        resultsDiv.innerHTML = '<div class="error-box">Validation failed: ' + escapeHtml(err.message) + '</div>';
+        statusText.textContent = 'Error';
+      }
+
+      setButtons(false);
+    };
+
+    // --- FHIR ---
+
+    const doFhir = async () => {
+      const message = getMessage();
+      if (!message) { return; }
+      if (!checkLimit()) { return; }
+
+      setButtons(true);
+      statusText.textContent = 'Converting to FHIR...';
+      setLoading('Converting HL7 to FHIR R4...');
+
+      try {
+        const data = await apiCall('/to-fhir', { message });
+        lastFhirResult = data;
+        incrementUsage();
+        showTabbedResults('fhir');
+        const entries = (data.entry || []).length;
+        statusText.textContent = 'FHIR Bundle with ' + entries + ' resource' + (entries === 1 ? '' : 's');
+      } catch (err) {
+        resultsDiv.innerHTML = '<div class="error-box">FHIR conversion failed: ' + escapeHtml(err.message) + '</div>';
+        statusText.textContent = 'Error';
+      }
+
+      setButtons(false);
+    };
+
+    // --- Generate ---
+
+    const doGenerate = async () => {
+      const messageType = genType.value;
+      genBtn.disabled = true;
+      genBtn.textContent = 'Generating...';
+
+      try {
+        const data = await apiCall('/generate', { messageType });
+        const raw = data.message || data.raw || '';
+        genTextarea.value = raw;
+        genOutput.style.display = 'block';
+      } catch (err) {
+        genTextarea.value = 'Generation failed: ' + err.message;
+        genOutput.style.display = 'block';
+      }
+
+      genBtn.disabled = false;
+      genBtn.textContent = 'Generate';
+    };
+
+    // --- Checkout (Stripe) ---
+
+    const getCheckout = async (plan) => {
+      try {
+        const res = await fetch(API + '/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            plan,
+            success_url: window.location.href,
+            cancel_url: window.location.href,
+          }),
+        });
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else if (data.error) {
+          alert('Checkout error: ' + data.error);
+        }
+      } catch (err) {
+        alert('Checkout failed: ' + err.message);
+      }
+    };
+
+    // --- Event listeners ---
+
+    parseBtn.addEventListener('click', doParse);
+    validateBtn.addEventListener('click', doValidate);
+    fhirBtn.addEventListener('click', doFhir);
+    genBtn.addEventListener('click', doGenerate);
+
+    genCopyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(genTextarea.value);
+      genCopyBtn.textContent = 'Copied!';
+      setTimeout(() => { genCopyBtn.textContent = 'Copy to Clipboard'; }, 2000);
+    });
+
+    genParseBtn.addEventListener('click', () => {
+      hl7Input.value = genTextarea.value;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      doParse();
+    });
+
+    // Ctrl+Enter to parse
+    hl7Input.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        doParse();
+      }
+    });
+
+    // --- Init ---
+    initApiKey();
+    updateUsageDisplay();
+  </script>
+</body>
+</html>

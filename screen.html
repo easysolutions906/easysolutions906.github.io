@@ -829,6 +829,26 @@
 
     .print-report { display: none; }
 
+    /* Ad slots */
+    .ad-slot {
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-align: center;
+      min-height: 90px;
+    }
+    .ad-slot.hidden { display: none; }
+    .ad-slot .ad-label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    @media print { .ad-slot { display: none !important; } }
+
     /* Responsive */
     @media (max-width: 600px) {
       h1 { font-size: 1.5rem; }
@@ -904,6 +924,12 @@
       </div>
     </div>
 
+    <div class="ad-slot" id="ad-top">
+      <div class="ad-label">Advertisement</div>
+      <!-- Replace with AdSense/Carbon/EthicalAds code -->
+      <div id="ad-top-content"></div>
+    </div>
+
     <div class="batch-section">
       <h2>Batch Screening</h2>
       <p class="batch-subtitle">Upload a CSV or TXT file with names to screen multiple entries at once.</p>
@@ -946,6 +972,12 @@
     </div>
 
     <div id="print-report" class="print-report"></div>
+
+    <div class="ad-slot" id="ad-bottom">
+      <div class="ad-label">Advertisement</div>
+      <!-- Replace with AdSense/Carbon/EthicalAds code -->
+      <div id="ad-bottom-content"></div>
+    </div>
 
     <div class="pricing-section" id="pricing">
       <h3>Unlimited Screening Plans</h3>
@@ -1082,6 +1114,7 @@
       apiKeyStatus.style.display = 'block';
       apiKeyToggle.innerHTML = 'API Key <span class="pro-badge">Pro</span>';
       updateUsageDisplay();
+      updateAds();
     });
 
     apiKeyClear.addEventListener('click', () => {
@@ -1090,6 +1123,7 @@
       apiKeyStatus.style.display = 'none';
       apiKeyToggle.textContent = 'Have an API key?';
       updateUsageDisplay();
+      updateAds();
     });
 
     // --- Usage tracking ---
@@ -1605,11 +1639,20 @@
       }).catch(() => {});
     };
 
+    // --- Ads (hidden for Pro users) ---
+    const updateAds = () => {
+      const hide = hasApiKey();
+      document.querySelectorAll('.ad-slot').forEach((el) => {
+        el.classList.toggle('hidden', hide);
+      });
+    };
+
     // --- Init ---
     screenBtn.addEventListener('click', doScreen);
     nameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { doScreen(); } });
     initApiKey();
     updateUsageDisplay();
+    updateAds();
   </script>
 </body>
 </html>
