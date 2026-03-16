@@ -480,6 +480,355 @@
 
     footer a { color: var(--text-dim); }
 
+    /* API Key section */
+    .api-key-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .api-key-toggle {
+      font-size: 0.85rem;
+      color: var(--accent);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .api-key-toggle:hover { text-decoration: underline; }
+
+    .api-key-body {
+      display: none;
+      margin-top: 0.75rem;
+      padding: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .api-key-body.open { display: block; }
+
+    .api-key-row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .api-key-row input {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-family: monospace;
+      outline: none;
+    }
+
+    .api-key-row input:focus { border-color: var(--accent); }
+
+    .api-key-row button {
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .api-key-row button:hover { background: var(--accent-hover); }
+
+    .api-key-status {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--green);
+      display: none;
+    }
+
+    .pro-badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--accent);
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-left: 0.5rem;
+    }
+
+    /* CSV batch upload */
+    .batch-section {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .batch-section h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .batch-section .batch-subtitle {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .csv-drop-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: transparent;
+    }
+
+    .csv-drop-zone:hover,
+    .csv-drop-zone.drag-over {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.04);
+    }
+
+    .csv-drop-zone .drop-label {
+      font-size: 1rem;
+      color: var(--text-dim);
+      margin-bottom: 0.25rem;
+    }
+
+    .csv-drop-zone .drop-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .csv-drop-zone .browse-link {
+      color: var(--accent);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .csv-preview {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .csv-preview .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .csv-preview .preview-header span {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .csv-preview .preview-clear {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .csv-preview .preview-clear:hover { color: var(--red); }
+
+    .csv-preview-list {
+      list-style: none;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+    }
+
+    .csv-preview-list li {
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .csv-preview-list li:last-child { border-bottom: none; }
+
+    .csv-preview .more-count {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .csv-preview .upgrade-prompt {
+      font-size: 0.85rem;
+      color: var(--orange);
+      margin-bottom: 0.75rem;
+      display: none;
+    }
+
+    .screen-all-btn {
+      padding: 0.75rem 1.5rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+    }
+
+    .screen-all-btn:hover { background: var(--accent-hover); }
+    .screen-all-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Batch results table */
+    .batch-results {
+      display: none;
+      margin-top: 1.5rem;
+    }
+
+    .batch-results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .batch-results-header h3 {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .batch-results table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .batch-results thead th {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      background: var(--bg-card);
+      border-bottom: 2px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .batch-results tbody td {
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .batch-results tbody tr.status-clear { background: rgba(34, 197, 94, 0.06); }
+    .batch-results tbody tr.status-exact { background: rgba(239, 68, 68, 0.08); }
+    .batch-results tbody tr.status-strong { background: rgba(249, 115, 22, 0.08); }
+    .batch-results tbody tr.status-partial { background: rgba(234, 179, 8, 0.06); }
+
+    .batch-status-badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .batch-status-badge.clear { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .batch-status-badge.exact { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+    .batch-status-badge.strong { background: rgba(249, 115, 22, 0.15); color: var(--orange); }
+    .batch-status-badge.partial { background: rgba(234, 179, 8, 0.15); color: var(--yellow); }
+
+    /* Download report button */
+    .download-report-btn {
+      padding: 0.6rem 1.25rem;
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .download-report-btn:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    /* Print / PDF report styles */
+    @media print {
+      body { background: white; color: black; font-size: 11pt; }
+      nav, .search-form, .filters, .api-cta, .email-capture, .pricing-section,
+      .cta-banner, .trust-bar, .status-bar, .empty-state, .subtitle,
+      .batch-section, .api-key-section, .download-report-btn,
+      .screen-all-btn, .csv-drop-zone, .csv-preview, footer,
+      .match-details-toggle, h1 { display: none !important; }
+
+      .print-report { display: block !important; }
+      .print-report * { color: black !important; }
+
+      .print-report-header {
+        text-align: center;
+        border-bottom: 2px solid #333;
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .print-report-header h1 {
+        display: block !important;
+        font-size: 18pt;
+        margin-bottom: 0.25rem;
+      }
+
+      .print-report-meta {
+        font-size: 9pt;
+        color: #666 !important;
+      }
+
+      .print-report-entry {
+        page-break-inside: avoid;
+        border: 1px solid #ccc;
+        padding: 0.75rem;
+        margin-bottom: 0.75rem;
+        border-radius: 4px;
+      }
+
+      .print-report-entry.flagged { border-left: 4px solid #c00; }
+      .print-report-entry.clear { border-left: 4px solid #090; }
+
+      .print-entry-name { font-weight: bold; font-size: 12pt; }
+      .print-entry-status { font-size: 10pt; }
+      .print-entry-matches { font-size: 9pt; margin-top: 0.5rem; }
+      .print-entry-matches table { width: 100%; border-collapse: collapse; margin-top: 0.25rem; }
+      .print-entry-matches th, .print-entry-matches td { border: 1px solid #ccc; padding: 0.25rem 0.5rem; font-size: 9pt; text-align: left; }
+      .print-entry-matches th { background: #f0f0f0; }
+
+      .print-report-footer {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid #ccc;
+        font-size: 8pt;
+        color: #999 !important;
+        text-align: center;
+      }
+
+      main { max-width: 100%; padding: 0; }
+      #results { display: block !important; }
+      .match-card, .batch-results, .results-header { display: none !important; }
+    }
+
+    .print-report { display: none; }
+
     /* Responsive */
     @media (max-width: 600px) {
       h1 { font-size: 1.5rem; }
@@ -487,6 +836,7 @@
       .search-form button { width: 100%; }
       .match-meta { grid-template-columns: 1fr; }
       .detail-grid { grid-template-columns: 1fr; }
+      .batch-results { overflow-x: auto; }
     }
   </style>
 </head>
@@ -530,6 +880,18 @@
       <input type="text" id="dob-filter" placeholder="DOB (YYYY-MM-DD)">
     </div>
 
+    <div class="api-key-section">
+      <button class="api-key-toggle" id="api-key-toggle" type="button">Have an API key?</button>
+      <div class="api-key-body" id="api-key-body">
+        <div class="api-key-row">
+          <input type="password" id="api-key-input" placeholder="Enter your API key">
+          <button id="api-key-save" type="button">Save</button>
+          <button id="api-key-clear" type="button" style="background:transparent;border:1px solid var(--border);color:var(--text-dim)">Clear</button>
+        </div>
+        <div class="api-key-status" id="api-key-status">API key saved. Pro features enabled.</div>
+      </div>
+    </div>
+
     <div class="status-bar">
       <span id="status-text">Ready to screen</span>
       <span class="usage" id="usage-text"></span>
@@ -541,7 +903,49 @@
         <p>18,712 sanctioned entities, individuals, vessels, and aircraft. Updated March 13, 2026.</p>
       </div>
     </div>
-  </main>
+
+    <div class="batch-section">
+      <h2>Batch Screening</h2>
+      <p class="batch-subtitle">Upload a CSV or TXT file with names to screen multiple entries at once.</p>
+
+      <div class="csv-drop-zone" id="csv-drop-zone">
+        <div class="drop-label">Drag and drop a .csv or .txt file here</div>
+        <div class="drop-hint">or <span class="browse-link">click to browse</span> -- first column: name, optional: country, DOB</div>
+        <input type="file" id="csv-file-input" accept=".csv,.txt" style="display:none">
+      </div>
+
+      <div class="csv-preview" id="csv-preview">
+        <div class="preview-header">
+          <span id="csv-preview-title">Names detected</span>
+          <button class="preview-clear" id="csv-clear" type="button">Clear file</button>
+        </div>
+        <ul class="csv-preview-list" id="csv-preview-list"></ul>
+        <div class="more-count" id="csv-more-count"></div>
+        <div class="upgrade-prompt" id="csv-upgrade-prompt">Free tier is limited to 5 names per batch. <a href="#pricing">Upgrade</a> to screen unlimited names.</div>
+        <button class="screen-all-btn" id="screen-all-btn" type="button">Screen All</button>
+      </div>
+
+      <div class="batch-results" id="batch-results">
+        <div class="batch-results-header">
+          <h3 id="batch-results-title">Batch Results</h3>
+          <button class="download-report-btn" id="batch-report-btn" type="button">Download Report</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Matches</th>
+              <th>Top Match</th>
+              <th>Score</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="batch-results-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="print-report" class="print-report"></div>
 
     <div class="pricing-section" id="pricing">
       <h3>Unlimited Screening Plans</h3>
@@ -603,8 +1007,11 @@
   <script>
     const API = 'https://ofac-screening-production.up.railway.app';
     const FREE_LIMIT = 10;
+    const FREE_BATCH_LIMIT = 5;
     const STORAGE_KEY = 'ofac_web_usage';
+    const API_KEY_STORAGE = 'ofac_api_key';
 
+    // DOM references
     const nameInput = document.getElementById('name-input');
     const screenBtn = document.getElementById('screen-btn');
     const typeFilter = document.getElementById('type-filter');
@@ -613,8 +1020,79 @@
     const statusText = document.getElementById('status-text');
     const usageText = document.getElementById('usage-text');
     const resultsDiv = document.getElementById('results');
+    const apiKeyToggle = document.getElementById('api-key-toggle');
+    const apiKeyBody = document.getElementById('api-key-body');
+    const apiKeyInput = document.getElementById('api-key-input');
+    const apiKeySave = document.getElementById('api-key-save');
+    const apiKeyClear = document.getElementById('api-key-clear');
+    const apiKeyStatus = document.getElementById('api-key-status');
+    const csvDropZone = document.getElementById('csv-drop-zone');
+    const csvFileInput = document.getElementById('csv-file-input');
+    const csvPreview = document.getElementById('csv-preview');
+    const csvPreviewList = document.getElementById('csv-preview-list');
+    const csvMoreCount = document.getElementById('csv-more-count');
+    const csvUpgradePrompt = document.getElementById('csv-upgrade-prompt');
+    const csvClear = document.getElementById('csv-clear');
+    const screenAllBtn = document.getElementById('screen-all-btn');
+    const batchResultsDiv = document.getElementById('batch-results');
+    const batchResultsBody = document.getElementById('batch-results-body');
+    const batchResultsTitle = document.getElementById('batch-results-title');
+    const batchReportBtn = document.getElementById('batch-report-btn');
+    const printReportDiv = document.getElementById('print-report');
+
+    // State
+    let parsedRows = [];
+    let lastSingleResult = null;
+    let lastBatchResults = [];
+    let lastListVersion = '--';
 
     const today = () => new Date().toISOString().slice(0, 10);
+
+    // --- API Key Management ---
+
+    const getApiKey = () => localStorage.getItem(API_KEY_STORAGE) || '';
+
+    const hasApiKey = () => getApiKey().length > 0;
+
+    const getAuthHeaders = () => {
+      const headers = { 'Content-Type': 'application/json' };
+      const key = getApiKey();
+      if (key) { headers['x-api-key'] = key; }
+      return headers;
+    };
+
+    const initApiKey = () => {
+      const key = getApiKey();
+      if (key) {
+        apiKeyInput.value = key;
+        apiKeyStatus.style.display = 'block';
+        apiKeyBody.classList.add('open');
+        apiKeyToggle.innerHTML = 'API Key <span class="pro-badge">Pro</span>';
+      }
+    };
+
+    apiKeyToggle.addEventListener('click', () => {
+      apiKeyBody.classList.toggle('open');
+    });
+
+    apiKeySave.addEventListener('click', () => {
+      const key = apiKeyInput.value.trim();
+      if (!key) { return; }
+      localStorage.setItem(API_KEY_STORAGE, key);
+      apiKeyStatus.style.display = 'block';
+      apiKeyToggle.innerHTML = 'API Key <span class="pro-badge">Pro</span>';
+      updateUsageDisplay();
+    });
+
+    apiKeyClear.addEventListener('click', () => {
+      localStorage.removeItem(API_KEY_STORAGE);
+      apiKeyInput.value = '';
+      apiKeyStatus.style.display = 'none';
+      apiKeyToggle.textContent = 'Have an API key?';
+      updateUsageDisplay();
+    });
+
+    // --- Usage tracking ---
 
     const getUsage = () => {
       try {
@@ -625,17 +1103,23 @@
       } catch { return { date: today(), count: 0 }; }
     };
 
-    const incrementUsage = () => {
+    const incrementUsage = (n = 1) => {
       const usage = getUsage();
-      usage.count++;
+      usage.count += n;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(usage));
       updateUsageDisplay();
     };
 
     const updateUsageDisplay = () => {
       const usage = getUsage();
-      usageText.textContent = `${usage.count}/${FREE_LIMIT} free screens today`;
+      if (hasApiKey()) {
+        usageText.innerHTML = usage.count + ' screens today <span class="pro-badge">Pro</span>';
+      } else {
+        usageText.textContent = usage.count + '/' + FREE_LIMIT + ' free screens today';
+      }
     };
+
+    // --- Utilities ---
 
     const escapeHtml = (str) => {
       const div = document.createElement('div');
@@ -650,7 +1134,249 @@
       return { label: 'weak', css: 'weak', badge: 'badge-weak' };
     };
 
-    const renderMatch = (match, index) => {
+    // --- CSV Parsing ---
+
+    const parseCSV = (text) => {
+      const lines = text.split(/\r?\n/).filter((line) => line.trim().length > 0);
+      if (lines.length === 0) { return []; }
+
+      const detectDelimiter = (line) => {
+        const tabs = (line.match(/\t/g) || []).length;
+        const commas = (line.match(/,/g) || []).length;
+        return tabs > commas ? '\t' : ',';
+      };
+
+      const delimiter = detectDelimiter(lines[0]);
+
+      const parseLine = (line) => {
+        const fields = [];
+        let current = '';
+        let inQuotes = false;
+
+        for (let i = 0; i < line.length; i++) {
+          const ch = line[i];
+          if (inQuotes) {
+            if (ch === '"' && line[i + 1] === '"') {
+              current += '"';
+              i++;
+            } else if (ch === '"') {
+              inQuotes = false;
+            } else {
+              current += ch;
+            }
+          } else if (ch === '"') {
+            inQuotes = true;
+          } else if (ch === delimiter) {
+            fields.push(current.trim());
+            current = '';
+          } else {
+            current += ch;
+          }
+        }
+        fields.push(current.trim());
+        return fields;
+      };
+
+      const rows = lines.map(parseLine);
+
+      // Detect header row: if first row contains common header-like words
+      const headerPatterns = /^(name|first.?name|last.?name|full.?name|country|dob|date.?of.?birth|nationality)$/i;
+      const firstRow = rows[0];
+      const looksLikeHeader = firstRow.some((field) => headerPatterns.test(field));
+      const dataRows = looksLikeHeader ? rows.slice(1) : rows;
+
+      return dataRows
+        .filter((fields) => fields[0] && fields[0].length > 0)
+        .map((fields) => ({
+          name: fields[0],
+          country: fields[1] || '',
+          dob: fields[2] || '',
+        }));
+    };
+
+    // --- CSV Upload UI ---
+
+    const handleFile = (file) => {
+      if (!file) { return; }
+      const ext = file.name.split('.').pop().toLowerCase();
+      if (ext !== 'csv' && ext !== 'txt') {
+        alert('Please upload a .csv or .txt file.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        parsedRows = parseCSV(e.target.result);
+        if (parsedRows.length === 0) {
+          alert('No names found in file. Expected first column to contain names.');
+          return;
+        }
+        showCSVPreview();
+      };
+      reader.readAsText(file);
+    };
+
+    const showCSVPreview = () => {
+      csvPreview.style.display = 'block';
+      csvPreviewList.innerHTML = '';
+
+      const previewCount = Math.min(parsedRows.length, 5);
+      for (let i = 0; i < previewCount; i++) {
+        const li = document.createElement('li');
+        let text = parsedRows[i].name;
+        if (parsedRows[i].country) { text += ' -- ' + parsedRows[i].country; }
+        if (parsedRows[i].dob) { text += ' -- ' + parsedRows[i].dob; }
+        li.textContent = text;
+        csvPreviewList.appendChild(li);
+      }
+
+      if (parsedRows.length > 5) {
+        csvMoreCount.textContent = '...and ' + (parsedRows.length - 5) + ' more';
+        csvMoreCount.style.display = 'block';
+      } else {
+        csvMoreCount.style.display = 'none';
+      }
+
+      // Show upgrade prompt if over free batch limit and no API key
+      if (!hasApiKey() && parsedRows.length > FREE_BATCH_LIMIT) {
+        csvUpgradePrompt.style.display = 'block';
+        document.getElementById('csv-preview-title').textContent = parsedRows.length + ' names detected (screening first ' + FREE_BATCH_LIMIT + ')';
+      } else {
+        csvUpgradePrompt.style.display = 'none';
+        document.getElementById('csv-preview-title').textContent = parsedRows.length + ' names detected';
+      }
+    };
+
+    const clearCSV = () => {
+      parsedRows = [];
+      csvPreview.style.display = 'none';
+      csvFileInput.value = '';
+      batchResultsDiv.style.display = 'none';
+      lastBatchResults = [];
+    };
+
+    csvDropZone.addEventListener('click', () => csvFileInput.click());
+    csvFileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+    csvDropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      csvDropZone.classList.add('drag-over');
+    });
+
+    csvDropZone.addEventListener('dragleave', () => {
+      csvDropZone.classList.remove('drag-over');
+    });
+
+    csvDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      csvDropZone.classList.remove('drag-over');
+      handleFile(e.dataTransfer.files[0]);
+    });
+
+    csvClear.addEventListener('click', clearCSV);
+
+    // --- Batch Screening ---
+
+    const doBatchScreen = async () => {
+      if (parsedRows.length === 0) { return; }
+
+      const rows = hasApiKey() ? parsedRows : parsedRows.slice(0, FREE_BATCH_LIMIT);
+
+      // Check usage limit for free tier
+      if (!hasApiKey()) {
+        const usage = getUsage();
+        if (usage.count + rows.length > FREE_LIMIT) {
+          batchResultsDiv.style.display = 'block';
+          batchResultsBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:1.5rem">Daily free limit would be exceeded. You have ' + (FREE_LIMIT - usage.count) + ' screens remaining today. <a href="#pricing">Upgrade</a> for unlimited access.</td></tr>';
+          return;
+        }
+      }
+
+      screenAllBtn.disabled = true;
+      screenAllBtn.textContent = 'Screening...';
+      statusText.textContent = 'Batch screening ' + rows.length + ' names...';
+
+      const names = rows.map((r) => {
+        const entry = { name: r.name };
+        if (r.country) { entry.country = r.country; }
+        if (r.dob) { entry.dateOfBirth = r.dob; }
+        return entry;
+      });
+
+      try {
+        const res = await fetch(API + '/screen/batch', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ names }),
+        });
+
+        const data = await res.json();
+
+        if (data.error) {
+          batchResultsDiv.style.display = 'block';
+          batchResultsBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:1.5rem">' + escapeHtml(data.error) + '</td></tr>';
+          statusText.textContent = 'Batch error';
+          screenAllBtn.disabled = false;
+          screenAllBtn.textContent = 'Screen All';
+          return;
+        }
+
+        incrementUsage(rows.length);
+
+        const results = data.results || [];
+        lastBatchResults = results;
+        lastListVersion = data.listVersion || '--';
+
+        renderBatchResults(results);
+        batchResultsTitle.textContent = 'Batch Results -- ' + results.length + ' names screened';
+        statusText.textContent = 'Batch complete: ' + results.length + ' names screened';
+      } catch (err) {
+        batchResultsDiv.style.display = 'block';
+        batchResultsBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:1.5rem">Batch screening failed: ' + escapeHtml(err.message) + '</td></tr>';
+        statusText.textContent = 'Batch error';
+      }
+
+      screenAllBtn.disabled = false;
+      screenAllBtn.textContent = 'Screen All';
+    };
+
+    const renderBatchResults = (results) => {
+      batchResultsDiv.style.display = 'block';
+      batchResultsBody.innerHTML = '';
+
+      results.forEach((result) => {
+        const name = result.name || result.query || '--';
+        const matches = result.matches || [];
+        const matchCount = matches.length;
+        const topMatch = matchCount > 0 ? (matches[0].entity?.name || matches[0].matchedName || '--') : '--';
+        const topScore = matchCount > 0 ? matches[0].score || 0 : 0;
+        const pct = Math.round(topScore * 100);
+
+        let statusClass = 'clear';
+        let statusLabel = 'Clear';
+        if (matchCount > 0) {
+          const { label } = classifyScore(topScore);
+          statusClass = label;
+          statusLabel = label.charAt(0).toUpperCase() + label.slice(1);
+        }
+
+        const tr = document.createElement('tr');
+        tr.className = 'status-' + statusClass;
+        tr.innerHTML =
+          '<td>' + escapeHtml(name) + '</td>' +
+          '<td>' + matchCount + '</td>' +
+          '<td>' + escapeHtml(topMatch) + '</td>' +
+          '<td>' + (matchCount > 0 ? pct + '%' : '--') + '</td>' +
+          '<td><span class="batch-status-badge ' + statusClass + '">' + statusLabel + '</span></td>';
+        batchResultsBody.appendChild(tr);
+      });
+    };
+
+    screenAllBtn.addEventListener('click', doBatchScreen);
+
+    // --- Single Name Screening ---
+
+    const renderMatch = (match) => {
       const entity = match.entity || {};
       const score = match.score || 0;
       const pct = Math.round(score * 100);
@@ -665,7 +1391,6 @@
 
       const aliases = (entity.aliases || []).map((a) => a.name).join(', ');
       const dob = (entity.datesOfBirth || []).map((d) => d.dateOfBirth).join(', ');
-      const pob = (entity.placesOfBirth || []).map((p) => p.placeOfBirth).join(', ');
       const nationalities = (entity.nationalities || []).map((n) => n.country).join(', ');
       const addresses = (entity.addresses || []).map((a) => [a.city, a.country].filter(Boolean).join(', ')).join('; ');
 
@@ -703,11 +1428,13 @@
       const name = nameInput.value.trim();
       if (!name) { return; }
 
-      const usage = getUsage();
-      if (usage.count >= FREE_LIMIT) {
-        resultsDiv.innerHTML = '<div class="error-box">Daily free limit reached (' + FREE_LIMIT + ' screens). Come back tomorrow or subscribe for unlimited access.</div>' +
-          '<div class="cta-banner"><h3>Need more screens?</h3><p>Unlimited screening starts at $4.99/month.</p><a class="btn" href="#" onclick="getCheckout(\'starter\')">Subscribe</a></div>';
-        return;
+      if (!hasApiKey()) {
+        const usage = getUsage();
+        if (usage.count >= FREE_LIMIT) {
+          resultsDiv.innerHTML = '<div class="error-box">Daily free limit reached (' + FREE_LIMIT + ' screens). Come back tomorrow or subscribe for unlimited access.</div>' +
+            '<div class="cta-banner"><h3>Need more screens?</h3><p>Unlimited screening starts at $4.99/month.</p><a class="btn" href="#" onclick="getCheckout(\'starter\')">Subscribe</a></div>';
+          return;
+        }
       }
 
       screenBtn.disabled = true;
@@ -725,7 +1452,7 @@
       try {
         const res = await fetch(API + '/screen', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getAuthHeaders(),
           body: JSON.stringify(body),
         });
 
@@ -741,6 +1468,8 @@
         incrementUsage();
 
         const matches = data.matches || [];
+        lastSingleResult = { name, matches, listVersion: data.listVersion || '--', screenedAt: data.screenedAt || '' };
+        lastListVersion = data.listVersion || '--';
         let html = '<div class="results-header">';
 
         if (matches.length === 0) {
@@ -755,9 +1484,15 @@
           html += matches.map(renderMatch).join('');
         }
 
+        html += '<div style="margin-top:1rem"><button class="download-report-btn" id="single-report-btn" type="button">Download Report</button></div>';
         html += '<div class="cta-banner"><h3>Need more than 10 screens/day?</h3><p>Unlimited screening + API access starts at $4.99/month. Integrate directly into your compliance workflow.</p><a class="btn" href="#pricing">View Plans</a></div>';
 
         resultsDiv.innerHTML = html;
+
+        document.getElementById('single-report-btn').addEventListener('click', () => {
+          generatePrintReport('single');
+        });
+
         statusText.textContent = matches.length + ' match' + (matches.length === 1 ? '' : 'es') + ' found';
       } catch (err) {
         resultsDiv.innerHTML = '<div class="error-box">Screening failed: ' + escapeHtml(err.message) + '</div>';
@@ -766,6 +1501,80 @@
 
       screenBtn.disabled = false;
     };
+
+    // --- PDF Report (print-based) ---
+
+    const generatePrintReport = (mode) => {
+      const now = new Date();
+      const dateStr = now.toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' });
+
+      let entriesHtml = '';
+
+      if (mode === 'single' && lastSingleResult) {
+        const { name, matches } = lastSingleResult;
+        const isFlagged = matches.length > 0;
+        entriesHtml += '<div class="print-report-entry ' + (isFlagged ? 'flagged' : 'clear') + '">';
+        entriesHtml += '<div class="print-entry-name">' + escapeHtml(name) + '</div>';
+        entriesHtml += '<div class="print-entry-status">' + (isFlagged ? 'FLAGGED -- ' + matches.length + ' match(es)' : 'CLEAR -- No matches found') + '</div>';
+
+        if (matches.length > 0) {
+          entriesHtml += '<div class="print-entry-matches"><table><thead><tr><th>Matched Name</th><th>Score</th><th>Type</th><th>Program</th></tr></thead><tbody>';
+          matches.forEach((m) => {
+            const entity = m.entity || {};
+            const pct = Math.round((m.score || 0) * 100);
+            entriesHtml += '<tr><td>' + escapeHtml(entity.name || m.matchedName || '--') + '</td><td>' + pct + '%</td><td>' + escapeHtml(entity.sdnType || '--') + '</td><td>' + escapeHtml((entity.programs || []).join(', ') || '--') + '</td></tr>';
+          });
+          entriesHtml += '</tbody></table></div>';
+        }
+
+        entriesHtml += '</div>';
+      } else if (mode === 'batch' && lastBatchResults.length > 0) {
+        lastBatchResults.forEach((result) => {
+          const name = result.name || result.query || '--';
+          const matches = result.matches || [];
+          const isFlagged = matches.length > 0;
+
+          entriesHtml += '<div class="print-report-entry ' + (isFlagged ? 'flagged' : 'clear') + '">';
+          entriesHtml += '<div class="print-entry-name">' + escapeHtml(name) + '</div>';
+          entriesHtml += '<div class="print-entry-status">' + (isFlagged ? 'FLAGGED -- ' + matches.length + ' match(es)' : 'CLEAR -- No matches found') + '</div>';
+
+          if (matches.length > 0) {
+            entriesHtml += '<div class="print-entry-matches"><table><thead><tr><th>Matched Name</th><th>Score</th><th>Type</th><th>Program</th></tr></thead><tbody>';
+            matches.forEach((m) => {
+              const entity = m.entity || {};
+              const pct = Math.round((m.score || 0) * 100);
+              entriesHtml += '<tr><td>' + escapeHtml(entity.name || m.matchedName || '--') + '</td><td>' + pct + '%</td><td>' + escapeHtml(entity.sdnType || '--') + '</td><td>' + escapeHtml((entity.programs || []).join(', ') || '--') + '</td></tr>';
+            });
+            entriesHtml += '</tbody></table></div>';
+          }
+
+          entriesHtml += '</div>';
+        });
+      }
+
+      printReportDiv.innerHTML =
+        '<div class="print-report-header">' +
+          '<h1>OFAC SDN Screening Report</h1>' +
+          '<div class="print-report-meta">' +
+            '<div>Date: ' + escapeHtml(dateStr) + '</div>' +
+            '<div>SDN List Version: ' + escapeHtml(lastListVersion) + '</div>' +
+            '<div>Entries Screened: ' + (mode === 'single' ? '1' : lastBatchResults.length) + '</div>' +
+          '</div>' +
+        '</div>' +
+        entriesHtml +
+        '<div class="print-report-footer">' +
+          'This report was generated by EasySolutions OFAC Screening Tool. This is not legal advice. ' +
+          'Compliance decisions remain the responsibility of the user.' +
+        '</div>';
+
+      window.print();
+    };
+
+    batchReportBtn.addEventListener('click', () => {
+      generatePrintReport('batch');
+    });
+
+    // --- Checkout + Email ---
 
     const getCheckout = async (plan) => {
       try {
@@ -784,13 +1593,11 @@
     const captureEmail = () => {
       const email = document.getElementById('email-input').value.trim();
       if (!email || !email.includes('@')) { return; }
-      // Store locally for now — hook up to a mailing list service later
       const emails = JSON.parse(localStorage.getItem('ofac_emails') || '[]');
       emails.push({ email, date: new Date().toISOString() });
       localStorage.setItem('ofac_emails', JSON.stringify(emails));
       document.getElementById('email-success').style.display = 'block';
       document.getElementById('email-input').value = '';
-      // Also send to server if endpoint exists
       fetch(API + '/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -798,8 +1605,10 @@
       }).catch(() => {});
     };
 
+    // --- Init ---
     screenBtn.addEventListener('click', doScreen);
     nameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { doScreen(); } });
+    initApiKey();
     updateUsageDisplay();
   </script>
 </body>
