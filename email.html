@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Email Validator — Check If an Email Is Valid, Disposable, or Real</title>
+  <meta name="description" content="Free online email validation tool. Check email syntax, MX records, disposable domain detection, free provider detection, and deliverability score. No signup required.">
+  <meta name="keywords" content="email validator, check if email is valid, disposable email checker, email verification tool, MX record check, email deliverability, free email validation, email syntax check">
+  <link rel="canonical" href="https://easysolutions906.github.io/email.html">
+  <meta property="og:title" content="Free Email Validator — Check If an Email Is Valid">
+  <meta property="og:description" content="Validate email addresses with syntax check, MX records, disposable detection, and deliverability scoring. No signup required.">
+  <meta property="og:url" content="https://easysolutions906.github.io/email.html">
+  <meta property="og:type" content="website">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --border: #334155;
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --red: #ef4444;
+      --orange: #f97316;
+      --yellow: #eab308;
+      --green: #22c55e;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+    }
+    nav .logo { font-weight: 700; font-size: 1.1rem; color: var(--text); }
+    nav .links { display: flex; gap: 1.5rem; }
+    nav .links a { color: var(--text-dim); font-size: 0.9rem; }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 3rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+
+    .api-cta {
+      position: fixed;
+      top: 1rem;
+      right: 1.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 100;
+      transition: background 0.2s;
+    }
+    .api-cta:hover { background: var(--accent-hover); text-decoration: none; }
+
+    /* Search form */
+    .search-form {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .search-form input[type="email"] {
+      flex: 1;
+      min-width: 250px;
+      padding: 0.85rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-form input:focus {
+      border-color: var(--accent);
+    }
+
+    .search-form button {
+      padding: 0.85rem 1.75rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .search-form button:hover { background: var(--accent-hover); }
+    .search-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Status bar */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .status-bar .usage { color: var(--text-muted); }
+    .status-bar .upgrade { color: var(--accent); font-weight: 600; }
+
+    /* Error */
+    .error-msg {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: var(--radius);
+      padding: 1rem;
+      color: var(--red);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .error-msg.visible { display: block; }
+
+    /* Result card */
+    .result-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .result-card.visible { display: block; }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .result-email {
+      font-size: 1.2rem;
+      font-weight: 700;
+      word-break: break-all;
+    }
+
+    .score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.9rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .score-high { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .score-medium { background: rgba(234, 179, 8, 0.15); color: var(--yellow); }
+    .score-low { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+
+    /* Checks grid */
+    .checks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .check-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .check-pass { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .check-fail { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+    .check-warn { background: rgba(234, 179, 8, 0.15); color: var(--yellow); }
+
+    .check-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .check-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .check-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Details section */
+    .details-section {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 0;
+      font-size: 0.85rem;
+    }
+
+    .detail-row .label { color: var(--text-muted); }
+    .detail-row .value { color: var(--text-dim); font-weight: 500; }
+
+    /* Pricing section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .price-card:hover { border-color: var(--accent); }
+
+    .price-card.popular {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .price-card-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 12px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .price-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-card .price {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+
+    .price-card .price span {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .price-card ul {
+      list-style: none;
+      margin-bottom: 1rem;
+    }
+
+    .price-card ul li {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      padding: 0.2rem 0;
+    }
+
+    .price-card ul li::before {
+      content: '\2713';
+      color: var(--green);
+      font-weight: 700;
+      margin-right: 0.5rem;
+    }
+
+    /* Email capture */
+    .email-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .email-section h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .email-section p {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .email-form {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .email-form input {
+      flex: 1;
+      padding: 0.7rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .email-form input:focus { border-color: var(--accent); }
+
+    .email-form button {
+      padding: 0.7rem 1.25rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .email-form button:hover { background: var(--accent-hover); }
+
+    /* FAQ */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-item h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-item p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+
+    /* Footer */
+    footer {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    footer .footer-links { display: flex; gap: 1.5rem; }
+    footer .footer-links a { color: var(--text-muted); }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .search-form { flex-direction: column; }
+      .checks-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .email-form { flex-direction: column; }
+      .result-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="https://rapidapi.com/easysolutions906/api/email-validation-pro" class="api-cta" target="_blank">Get API Key</a>
+
+  <nav>
+    <a href="index.html" class="logo">Easy Solutions</a>
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="screen.html">OFAC Screener</a>
+      <a href="currency.html">Currency</a>
+      <a href="https://github.com/easysolutions906">GitHub</a>
+    </div>
+  </nav>
+
+  <main>
+    <h1>Email Validator</h1>
+    <p class="subtitle">Check if an email address is valid, disposable, or from a free provider. Syntax, MX records, and deliverability scoring.</p>
+
+    <div class="status-bar">
+      <span>Free tier: unlimited validations on this page</span>
+      <a href="https://rapidapi.com/easysolutions906/api/email-validation-pro" class="upgrade" target="_blank">Get API Access</a>
+    </div>
+
+    <div id="error" class="error-msg"></div>
+
+    <div class="search-form">
+      <input type="email" id="emailAddr" placeholder="Enter email address (e.g. user@example.com)" autocomplete="off">
+      <button id="validateBtn">Validate</button>
+    </div>
+
+    <div id="result" class="result-card">
+      <div class="result-header">
+        <div class="result-email" id="resultEmail"></div>
+        <div class="score-badge" id="scoreBadge"></div>
+      </div>
+
+      <div class="checks-grid" id="checksGrid"></div>
+
+      <div class="details-section" id="detailsSection"></div>
+    </div>
+
+    <!-- Pricing -->
+    <h2>API Pricing</h2>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h4>Pay Per Use</h4>
+        <div class="price">$0.003 <span>/call</span></div>
+        <ul>
+          <li>10 req/min</li>
+          <li>Unlimited requests</li>
+          <li>Syntax + MX check</li>
+          <li>Disposable detection</li>
+        </ul>
+      </div>
+      <div class="price-card popular">
+        <div class="price-card-badge">Recommended</div>
+        <h4>Pro</h4>
+        <div class="price">$9.99 <span>/mo</span></div>
+        <ul>
+          <li>50 req/min</li>
+          <li>5,000 requests/mo</li>
+          <li>Batch validation</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h4>Ultra</h4>
+        <div class="price">$29.99 <span>/mo</span></div>
+        <ul>
+          <li>200 req/min</li>
+          <li>25,000 requests/mo</li>
+          <li>Batch validation</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h4>Mega</h4>
+        <div class="price">$99.99 <span>/mo</span></div>
+        <ul>
+          <li>500 req/min</li>
+          <li>100,000 requests/mo</li>
+          <li>Batch validation</li>
+          <li>Dedicated support</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>What does this email validator check?</h3>
+      <p>Five checks: (1) syntax validation against RFC 5322, (2) MX record lookup to verify the domain accepts email, (3) disposable email detection against 3,000+ throwaway domains, (4) free provider detection (Gmail, Yahoo, Outlook, etc.), and (5) an overall deliverability score from 0-100.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What is a disposable email?</h3>
+      <p>Disposable emails are temporary addresses from services like Guerrilla Mail, Temp Mail, or Mailinator. They are often used to bypass signups. Detecting them helps keep your user database clean.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does this tool send an email to verify the address?</h3>
+      <p>No. Validation is done through DNS lookups and pattern matching. No emails are sent, so there is zero risk of triggering spam filters or bouncing.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is there a batch validation API?</h3>
+      <p>Yes. The API supports batch validation of up to 50 emails per request via POST /validate/batch. Use any paid plan for batch access.</p>
+    </div>
+
+    <!-- Email capture -->
+    <div class="email-section">
+      <h3>Get notified about new features</h3>
+      <p>We are adding SMTP verification, catch-all detection, and role-based email detection. Be the first to know.</p>
+      <div class="email-form">
+        <input type="email" id="notifyEmail" placeholder="you@company.com">
+        <button id="notifyBtn">Notify Me</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>Easy Solutions &mdash; AI-ready data tools</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="https://github.com/easysolutions906">GitHub</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </footer>
+
+  <script>
+    const API_BASE = 'https://web-production-d5c8e.up.railway.app';
+
+    const emailInput = document.getElementById('emailAddr');
+    const validateBtn = document.getElementById('validateBtn');
+    const resultCard = document.getElementById('result');
+    const resultEmail = document.getElementById('resultEmail');
+    const scoreBadge = document.getElementById('scoreBadge');
+    const checksGrid = document.getElementById('checksGrid');
+    const detailsSection = document.getElementById('detailsSection');
+    const errorMsg = document.getElementById('error');
+
+    const showError = (msg) => {
+      errorMsg.textContent = msg;
+      errorMsg.classList.add('visible');
+      setTimeout(() => errorMsg.classList.remove('visible'), 5000);
+    };
+
+    const scoreClass = (score) => {
+      if (score >= 70) { return 'score-high'; }
+      if (score >= 40) { return 'score-medium'; }
+      return 'score-low';
+    };
+
+    const checkIcon = (pass) => {
+      if (pass === true) { return ['check-pass', '\u2713']; }
+      if (pass === false) { return ['check-fail', '\u2717']; }
+      return ['check-warn', '?'];
+    };
+
+    const renderChecks = (data) => {
+      const checks = [
+        { label: 'Syntax', value: data.syntax?.valid ? 'Valid' : 'Invalid', pass: data.syntax?.valid },
+        { label: 'MX Records', value: data.mx?.valid ? 'Found' : 'Not found', pass: data.mx?.valid },
+        { label: 'Disposable', value: data.disposable ? 'Yes (temporary)' : 'No', pass: !data.disposable },
+        { label: 'Free Provider', value: data.freeProvider ? 'Yes' : 'No', pass: data.freeProvider === false ? true : null },
+      ];
+
+      checksGrid.innerHTML = checks.map((c) => {
+        const [iconClass, iconChar] = checkIcon(c.pass);
+        return `
+          <div class="check-item">
+            <div class="check-icon ${iconClass}">${iconChar}</div>
+            <div class="check-text">
+              <div class="check-label">${c.label}</div>
+              <div class="check-value">${c.value}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    };
+
+    const renderDetails = (data) => {
+      const rows = [
+        ['Email', data.email],
+        ['Local Part', data.syntax?.localPart || data.email?.split('@')[0]],
+        ['Domain', data.syntax?.domain || data.email?.split('@')[1]],
+        ['MX Host', data.mx?.records?.[0] || data.mx?.host || 'N/A'],
+        ['Score', `${data.score}/100`],
+        ['Verdict', data.verdict || (data.score >= 70 ? 'deliverable' : data.score >= 40 ? 'risky' : 'undeliverable')],
+      ];
+
+      detailsSection.innerHTML = rows.map(([label, value]) =>
+        `<div class="detail-row">
+          <span class="label">${label}</span>
+          <span class="value">${value || 'N/A'}</span>
+        </div>`
+      ).join('');
+    };
+
+    const doValidate = async () => {
+      const email = emailInput.value.trim();
+
+      if (!email || !email.includes('@')) {
+        showError('Please enter a valid email address.');
+        return;
+      }
+
+      validateBtn.disabled = true;
+      validateBtn.textContent = 'Validating...';
+
+      try {
+        const res = await fetch(`${API_BASE}/validate?email=${encodeURIComponent(email)}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          showError(data.error || 'Validation failed.');
+          return;
+        }
+
+        resultEmail.textContent = data.email || email;
+
+        const score = data.score ?? 0;
+        scoreBadge.className = `score-badge ${scoreClass(score)}`;
+        scoreBadge.textContent = `Score: ${score}/100`;
+
+        renderChecks(data);
+        renderDetails(data);
+        resultCard.classList.add('visible');
+      } catch {
+        showError('Could not reach the email validation API. Please try again.');
+      } finally {
+        validateBtn.disabled = false;
+        validateBtn.textContent = 'Validate';
+      }
+    };
+
+    validateBtn.addEventListener('click', doValidate);
+    emailInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { doValidate(); } });
+
+    document.getElementById('notifyBtn').addEventListener('click', () => {
+      const email = document.getElementById('notifyEmail').value;
+      if (email && email.includes('@')) {
+        document.getElementById('notifyBtn').textContent = 'Subscribed!';
+        document.getElementById('notifyEmail').value = '';
+      }
+    });
+  </script>
+
+</body>
+</html>

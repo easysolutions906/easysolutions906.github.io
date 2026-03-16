@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Currency Converter — Exchange Rate Calculator | USD to EUR, GBP, JPY</title>
+  <meta name="description" content="Free online currency converter and exchange rate calculator. Convert USD to EUR, GBP, JPY and 30+ currencies in real-time. Historical rates back to 1999. No signup required.">
+  <meta name="keywords" content="currency converter, exchange rate calculator, USD to EUR converter, currency exchange rates, real-time exchange rates, historical exchange rates, free currency API">
+  <link rel="canonical" href="https://easysolutions906.github.io/currency.html">
+  <meta property="og:title" content="Free Currency Converter — Real-Time Exchange Rates">
+  <meta property="og:description" content="Convert between 30+ currencies with real-time exchange rates. Historical rates back to 1999. No signup required.">
+  <meta property="og:url" content="https://easysolutions906.github.io/currency.html">
+  <meta property="og:type" content="website">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --border: #334155;
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --red: #ef4444;
+      --orange: #f97316;
+      --yellow: #eab308;
+      --green: #22c55e;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+    }
+    nav .logo { font-weight: 700; font-size: 1.1rem; color: var(--text); }
+    nav .links { display: flex; gap: 1.5rem; }
+    nav .links a { color: var(--text-dim); font-size: 0.9rem; }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 3rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+
+    .api-cta {
+      position: fixed;
+      top: 1rem;
+      right: 1.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 100;
+      transition: background 0.2s;
+    }
+    .api-cta:hover { background: var(--accent-hover); text-decoration: none; }
+
+    /* Converter form */
+    .converter-form {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0.75rem;
+      align-items: end;
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .form-group select,
+    .form-group input {
+      padding: 0.85rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .form-group select:focus,
+    .form-group input:focus {
+      border-color: var(--accent);
+    }
+
+    .swap-btn {
+      padding: 0.85rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-dim);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      align-self: end;
+    }
+    .swap-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .amount-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .amount-row input {
+      flex: 1;
+      padding: 0.85rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .amount-row input:focus {
+      border-color: var(--accent);
+    }
+
+    .convert-btn {
+      padding: 0.85rem 1.75rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .convert-btn:hover { background: var(--accent-hover); }
+    .convert-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Result card */
+    .result-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .result-card.visible { display: block; }
+
+    .result-amount {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-rate {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-bottom: 0.25rem;
+    }
+
+    .result-date {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Historical section */
+    .historical-form {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      align-items: end;
+    }
+
+    .historical-form input[type="date"] {
+      padding: 0.7rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .historical-form input[type="date"]:focus {
+      border-color: var(--accent);
+    }
+
+    .historical-btn {
+      padding: 0.7rem 1.25rem;
+      background: var(--bg-card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .historical-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .historical-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .historical-result {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .historical-result.visible { display: block; }
+
+    .historical-result .rate-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .historical-result .rate-info {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+    }
+
+    /* Error */
+    .error-msg {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: var(--radius);
+      padding: 1rem;
+      color: var(--red);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .error-msg.visible { display: block; }
+
+    /* Status bar */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .status-bar .usage { color: var(--text-muted); }
+    .status-bar .upgrade { color: var(--accent); font-weight: 600; }
+
+    /* Pricing section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .price-card:hover { border-color: var(--accent); }
+
+    .price-card.popular {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .price-card-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 12px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .price-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-card .price {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+
+    .price-card .price span {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .price-card ul {
+      list-style: none;
+      margin-bottom: 1rem;
+    }
+
+    .price-card ul li {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      padding: 0.2rem 0;
+    }
+
+    .price-card ul li::before {
+      content: '\2713';
+      color: var(--green);
+      font-weight: 700;
+      margin-right: 0.5rem;
+    }
+
+    /* Email capture */
+    .email-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .email-section h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .email-section p {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .email-form {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .email-form input {
+      flex: 1;
+      padding: 0.7rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .email-form input:focus { border-color: var(--accent); }
+
+    .email-form button {
+      padding: 0.7rem 1.25rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .email-form button:hover { background: var(--accent-hover); }
+
+    /* Footer */
+    footer {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    footer .footer-links { display: flex; gap: 1.5rem; }
+    footer .footer-links a { color: var(--text-muted); }
+
+    /* FAQ */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-item h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-item p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .converter-form {
+        grid-template-columns: 1fr;
+      }
+      .swap-btn { align-self: center; }
+      .amount-row { flex-direction: column; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .email-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="https://rapidapi.com/easysolutions906/api/currency-exchange-pro" class="api-cta" target="_blank">Get API Key</a>
+
+  <nav>
+    <a href="index.html" class="logo">Easy Solutions</a>
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="screen.html">OFAC Screener</a>
+      <a href="email.html">Email Validator</a>
+      <a href="https://github.com/easysolutions906">GitHub</a>
+    </div>
+  </nav>
+
+  <main>
+    <h1>Currency Converter</h1>
+    <p class="subtitle">Convert between 30+ currencies with real-time exchange rates. Free, no signup required.</p>
+
+    <div class="status-bar">
+      <span>Free tier: unlimited conversions on this page</span>
+      <a href="https://rapidapi.com/easysolutions906/api/currency-exchange-pro" class="upgrade" target="_blank">Get API Access</a>
+    </div>
+
+    <div id="error" class="error-msg"></div>
+
+    <!-- Converter -->
+    <div class="converter-form">
+      <div class="form-group">
+        <label for="fromCurrency">From</label>
+        <select id="fromCurrency"></select>
+      </div>
+      <button class="swap-btn" id="swapBtn" title="Swap currencies">&#8646;</button>
+      <div class="form-group">
+        <label for="toCurrency">To</label>
+        <select id="toCurrency"></select>
+      </div>
+    </div>
+
+    <div class="amount-row">
+      <input type="number" id="amount" value="1" min="0" step="any" placeholder="Amount">
+      <button class="convert-btn" id="convertBtn">Convert</button>
+    </div>
+
+    <div id="result" class="result-card">
+      <div class="result-amount" id="resultAmount"></div>
+      <div class="result-rate" id="resultRate"></div>
+      <div class="result-date" id="resultDate"></div>
+    </div>
+
+    <!-- Historical -->
+    <h2>Historical Rate</h2>
+    <div class="historical-form">
+      <div class="form-group">
+        <label for="histDate">Date</label>
+        <input type="date" id="histDate">
+      </div>
+      <button class="historical-btn" id="histBtn">Look Up Rate</button>
+    </div>
+
+    <div id="histResult" class="historical-result">
+      <div class="rate-value" id="histRateValue"></div>
+      <div class="rate-info" id="histRateInfo"></div>
+    </div>
+
+    <!-- Pricing -->
+    <h2>API Pricing</h2>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h4>Pay Per Use</h4>
+        <div class="price">$0.003 <span>/call</span></div>
+        <ul>
+          <li>10 req/min</li>
+          <li>Unlimited requests</li>
+          <li>Real-time rates</li>
+          <li>Historical data</li>
+        </ul>
+      </div>
+      <div class="price-card popular">
+        <div class="price-card-badge">Recommended</div>
+        <h4>Pro</h4>
+        <div class="price">$9.99 <span>/mo</span></div>
+        <ul>
+          <li>50 req/min</li>
+          <li>5,000 requests/mo</li>
+          <li>Batch conversion</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h4>Ultra</h4>
+        <div class="price">$29.99 <span>/mo</span></div>
+        <ul>
+          <li>200 req/min</li>
+          <li>25,000 requests/mo</li>
+          <li>Batch conversion</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h4>Mega</h4>
+        <div class="price">$99.99 <span>/mo</span></div>
+        <ul>
+          <li>500 req/min</li>
+          <li>100,000 requests/mo</li>
+          <li>Batch conversion</li>
+          <li>Dedicated support</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>How often are exchange rates updated?</h3>
+      <p>Rates are updated every hour from the European Central Bank via Frankfurter. Weekday rates reflect the latest ECB reference rates; weekend queries return Friday's closing rates.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Which currencies are supported?</h3>
+      <p>Over 30 currencies including USD, EUR, GBP, JPY, CAD, AUD, CHF, CNY, INR, BRL, MXN, KRW, SEK, NOK, DKK, PLN, TRY, ZAR, NZD, SGD, HKD, THB, MYR, PHP, IDR, CZK, HUF, ILS, and more.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How far back do historical rates go?</h3>
+      <p>Historical exchange rate data is available from January 4, 1999 (the introduction of the Euro) to present.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is there a free tier for the API?</h3>
+      <p>Yes. The Pay Per Use plan starts at $0.003 per call with no monthly commitment. This web tool is completely free with no signup required.</p>
+    </div>
+
+    <!-- Email capture -->
+    <div class="email-section">
+      <h3>Get notified about new features</h3>
+      <p>We are adding rate alerts, multi-currency dashboards, and webhook integrations. Be the first to know.</p>
+      <div class="email-form">
+        <input type="email" id="emailInput" placeholder="you@company.com">
+        <button id="emailBtn">Notify Me</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>Easy Solutions &mdash; AI-ready data tools</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="https://github.com/easysolutions906">GitHub</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </footer>
+
+  <script>
+    const API_BASE = 'https://currency-exchang.up.railway.app';
+
+    const CURRENCIES = [
+      'USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY', 'INR', 'BRL',
+      'MXN', 'KRW', 'SEK', 'NOK', 'DKK', 'PLN', 'TRY', 'ZAR', 'NZD', 'SGD',
+      'HKD', 'THB', 'MYR', 'PHP', 'IDR', 'CZK', 'HUF', 'ILS', 'BGN', 'RON',
+      'ISK', 'HRK',
+    ];
+
+    const CURRENCY_NAMES = {
+      USD: 'US Dollar', EUR: 'Euro', GBP: 'British Pound', JPY: 'Japanese Yen',
+      CAD: 'Canadian Dollar', AUD: 'Australian Dollar', CHF: 'Swiss Franc',
+      CNY: 'Chinese Yuan', INR: 'Indian Rupee', BRL: 'Brazilian Real',
+      MXN: 'Mexican Peso', KRW: 'South Korean Won', SEK: 'Swedish Krona',
+      NOK: 'Norwegian Krone', DKK: 'Danish Krone', PLN: 'Polish Zloty',
+      TRY: 'Turkish Lira', ZAR: 'South African Rand', NZD: 'New Zealand Dollar',
+      SGD: 'Singapore Dollar', HKD: 'Hong Kong Dollar', THB: 'Thai Baht',
+      MYR: 'Malaysian Ringgit', PHP: 'Philippine Peso', IDR: 'Indonesian Rupiah',
+      CZK: 'Czech Koruna', HUF: 'Hungarian Forint', ILS: 'Israeli Shekel',
+      BGN: 'Bulgarian Lev', RON: 'Romanian Leu', ISK: 'Icelandic Krona',
+      HRK: 'Croatian Kuna',
+    };
+
+    const fromSelect = document.getElementById('fromCurrency');
+    const toSelect = document.getElementById('toCurrency');
+    const amountInput = document.getElementById('amount');
+    const convertBtn = document.getElementById('convertBtn');
+    const swapBtn = document.getElementById('swapBtn');
+    const resultCard = document.getElementById('result');
+    const resultAmount = document.getElementById('resultAmount');
+    const resultRate = document.getElementById('resultRate');
+    const resultDate = document.getElementById('resultDate');
+    const errorMsg = document.getElementById('error');
+    const histDate = document.getElementById('histDate');
+    const histBtn = document.getElementById('histBtn');
+    const histResult = document.getElementById('histResult');
+    const histRateValue = document.getElementById('histRateValue');
+    const histRateInfo = document.getElementById('histRateInfo');
+
+    const populateSelect = (select, defaultVal) => {
+      CURRENCIES.forEach((code) => {
+        const opt = document.createElement('option');
+        opt.value = code;
+        opt.textContent = `${code} - ${CURRENCY_NAMES[code] || code}`;
+        if (code === defaultVal) { opt.selected = true; }
+        select.appendChild(opt);
+      });
+    };
+
+    populateSelect(fromSelect, 'USD');
+    populateSelect(toSelect, 'EUR');
+
+    const today = new Date().toISOString().split('T')[0];
+    histDate.max = today;
+    histDate.value = today;
+    histDate.min = '1999-01-04';
+
+    const showError = (msg) => {
+      errorMsg.textContent = msg;
+      errorMsg.classList.add('visible');
+      setTimeout(() => errorMsg.classList.remove('visible'), 5000);
+    };
+
+    const formatCurrency = (amount, code) => {
+      try {
+        return new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: code,
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 4,
+        }).format(amount);
+      } catch {
+        return `${code} ${amount.toFixed(4)}`;
+      }
+    };
+
+    const doConvert = async () => {
+      const from = fromSelect.value;
+      const to = toSelect.value;
+      const amount = parseFloat(amountInput.value);
+
+      if (!Number.isFinite(amount) || amount <= 0) {
+        showError('Please enter a valid positive amount.');
+        return;
+      }
+
+      convertBtn.disabled = true;
+      convertBtn.textContent = 'Converting...';
+
+      try {
+        const res = await fetch(`${API_BASE}/convert?from=${from}&to=${to}&amount=${amount}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          showError(data.error || 'Conversion failed.');
+          return;
+        }
+
+        resultAmount.textContent = `${formatCurrency(amount, from)} = ${formatCurrency(data.result, to)}`;
+        resultRate.textContent = `1 ${from} = ${data.rate} ${to}`;
+        resultDate.textContent = `Rate as of ${data.date}`;
+        resultCard.classList.add('visible');
+      } catch {
+        showError('Could not reach the currency API. Please try again.');
+      } finally {
+        convertBtn.disabled = false;
+        convertBtn.textContent = 'Convert';
+      }
+    };
+
+    const doHistorical = async () => {
+      const from = fromSelect.value;
+      const to = toSelect.value;
+      const date = histDate.value;
+
+      if (!date) {
+        showError('Please select a date.');
+        return;
+      }
+
+      histBtn.disabled = true;
+      histBtn.textContent = 'Looking up...';
+
+      try {
+        const res = await fetch(`${API_BASE}/historical?date=${date}&base=${from}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          showError(data.error || 'Historical lookup failed.');
+          return;
+        }
+
+        const rate = data.rates[to];
+        if (!rate) {
+          showError(`No rate found for ${to} on ${date}.`);
+          return;
+        }
+
+        histRateValue.textContent = `1 ${from} = ${rate} ${to}`;
+        histRateInfo.textContent = `Historical rate for ${data.date}`;
+        histResult.classList.add('visible');
+      } catch {
+        showError('Could not reach the currency API. Please try again.');
+      } finally {
+        histBtn.disabled = false;
+        histBtn.textContent = 'Look Up Rate';
+      }
+    };
+
+    convertBtn.addEventListener('click', doConvert);
+    amountInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { doConvert(); } });
+    histBtn.addEventListener('click', doHistorical);
+
+    swapBtn.addEventListener('click', () => {
+      const tmp = fromSelect.value;
+      fromSelect.value = toSelect.value;
+      toSelect.value = tmp;
+    });
+
+    document.getElementById('emailBtn').addEventListener('click', () => {
+      const email = document.getElementById('emailInput').value;
+      if (email && email.includes('@')) {
+        document.getElementById('emailBtn').textContent = 'Subscribed!';
+        document.getElementById('emailInput').value = '';
+      }
+    });
+  </script>
+
+</body>
+</html>
