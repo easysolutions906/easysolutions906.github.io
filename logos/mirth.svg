@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <rect width="500" height="500" rx="60" fill="#2563eb"/>
+  <rect x="130" y="110" width="100" height="140" rx="10" fill="none" stroke="#ffffff" stroke-width="12"/>
+  <rect x="270" y="110" width="100" height="140" rx="10" fill="none" stroke="#ffffff" stroke-width="12"/>
+  <line x1="230" y1="160" x2="270" y2="180" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+  <line x1="230" y1="200" x2="270" y2="180" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+  <polyline points="160,300 200,340 240,300 280,340 320,300 360,340" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="250" y="440" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="44" fill="#ffffff">MIRTH</text>
+</svg>
